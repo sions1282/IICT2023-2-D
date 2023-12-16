@@ -12,7 +12,7 @@ function preload() {
 function setup() {
   createCanvas(1920, 1080);
   noStroke();
-  startCharacter = new startCharacter(0, 835, 20); 
+  startCharacter = new startCharacter(0, 835, 5); 
     for (let i = 0; i < 100; i++) {
       snowflakes.push(new Snowflake(random(6, 10))); 
     }
