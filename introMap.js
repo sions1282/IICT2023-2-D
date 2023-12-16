@@ -61,13 +61,31 @@ drawChristmasTree(1800, 790, 70);
 
 
 function messageNotice(){
-  if (startCharacter.x> 100 && startCharacter.x < 400||startCharacter.x> 550 && startCharacter.x< 850||startCharacter.x > 1000 && startCharacter.x< 1350){
+  if (startCharacter.x> 100 && startCharacter.x < 400){
     fill(255, 200, 0)
     rect(1400, 80, 400, 100);
     fill(0)
-    textSize(30);  
+    textSize(25);  
     textFont(customFont);
-    text('메시지가 도착했습니다!', 1435, 140);
+    text("  '친구'님으로부터\n메시지가 도착했습니다!", 1475, 120);
+  }
+
+  if (startCharacter.x> 550 && startCharacter.x< 850){
+    fill(255, 200, 0)
+    rect(1400, 80, 400, 100);
+    fill(0)
+    textSize(25);  
+    textFont(customFont);
+    text("  '자기'님으로부터\n메시지가 도착했습니다!", 1475, 120);
+  }
+
+  if (startCharacter.x > 1000 && startCharacter.x< 1350){
+    fill(255, 200, 0)
+    rect(1400, 80, 400, 100);
+    fill(0)
+    textSize(25);  
+    textFont(customFont);
+    text("  '엄마'님으로부터\n메시지가 도착했습니다!", 1475, 120);
   }
 }
 
@@ -273,19 +291,19 @@ function notice(){
     textFont(customFont);
     fill(255);
     textSize(40);
-    text("좌우 화살표 키를 눌러 이동하세요!", 300, 130)
+    text("좌우 화살표 키를 눌러 이동하세요!", 310, 130)
     textSize(30);
-    text("메시지가 도착하면 'ENTER' 버튼을 눌러 읽어주세요!", 280, 200)
+    text("메시지가 도착하면 'ENTER' 버튼을 누른 채로 읽어주세요!", 250, 200)
+    text("Merry Christmas", 1500, 870)
 
   if(startCharacter.x>1050){
     noStroke();
     textFont(customFont);
     fill(0);
-    textSize(40);
-    text("스페이스바를 눌러 집으로 들어가세요!", 300, 1000)
+    textSize(35);
+    text("     3개의 메시지를 모두 읽었다면\n스페이스바를 눌러 집으로 들어가세요!", 300, 970)
   }
 
-  fill(255);
-  text("Merry Christmas", 1500, 870)
 }
+
 
