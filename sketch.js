@@ -1177,6 +1177,7 @@ function drawHome() {
         text("Press  ENTER", 660, 100);
         fill(240);
         rect(1310, 30, 580, 900);
+        rectMode(CENTER);
         rect(850, 90, 95, 110);
     }
   }
