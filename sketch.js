@@ -1133,10 +1133,11 @@ function drawHome() {
       200 < homePlayer.y &&
       homePlayer.y < 250
     ) {
-      if (frameCount % 60 < 30) {
         fill(255);
         text("Press  ENTER", 660, 100);
-      }
+        fill(240);
+        rect(1310, 30, 580, 900);
+        rect(850, 90, 95, 110);
     }
   }
 
