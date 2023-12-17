@@ -2255,18 +2255,22 @@ function drawMini7() {
       }
     }
 
-    //퍼즐 안내메시지
-    if (!isSolved()) {
-      travelTalk();
-      if (clickCount % 15 >= 5) {
-        displayMessage1(fightMessages[currentMessage]);
-      }
-      if (clickCount % 15 >= 10) {
-        displayMessage2(solveMessages[currentSolveMessage]);
-      }
+     if (!isSolved()) {
+        travelTalk();
+        const maxMessageIndex = solveMessages.length - 1;
+        
+        if (clickCount % 15 >= 5 ) {
+          if (currentMessage <= maxMessageIndex) {
+            displayMessage1(fightMessages[currentMessage]);
+          }
+        }
 
-    }
-  }
+        if (clickCount % 15 >= 10 ) {
+          if (currentSolveMessage <= maxMessageIndex) {
+            displayMessage2(solveMessages[currentSolveMessage]);
+          }
+        }
+      }
 
 
   // If it is solved
