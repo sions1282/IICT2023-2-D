@@ -40,13 +40,13 @@ function setup() {
   fill('#964B00')
   rect(300, 0, 1620, 1080)
 
-  
+
 
   textSize(50);
   textFont(gameFont)
   fill('#964B00')
   textSize(40)
-  text("우리 가족의\n  변화를\n 찾아보자!" , 45, 200);
+  text("우리 가족의\n  변화를\n 찾아보자!", 45, 200);
   fill(0);
   textSize(20);
   text("  오른쪽 가족사진에서\n다른 부분을 클릭해주세요!", 30, 350)
@@ -57,25 +57,25 @@ function setup() {
   text('2010', 700, 1065)
   text('2023', 1500, 1065)
 
-    //음악 버튼
-    let playButton = createButton('Music Start');
-    playButton.style('font-size', '30px');
-    playButton.style('font-family', 'neodgm')
-    playButton.style('width', '200px'); // 버튼의 너비 설정
-    playButton.style('height', '80px');
-    playButton.position(65, 700);
-    playButton.mousePressed(playMusic);
+  //음악 버튼
+  let playButton = createButton('Music Start');
+  playButton.style('font-size', '30px');
+  playButton.style('font-family', 'neodgm')
+  playButton.style('width', '200px'); // 버튼의 너비 설정
+  playButton.style('height', '80px');
+  playButton.position(65, 700);
+  playButton.mousePressed(playMusic);
 }
 
 
 function draw() {
 
-    // 미리 정의한 차이에 동그라미 그리기
-    for (let i = 0; i < differences.length; i++) {
-      let diff = differences[i];
-      fill(255, 0, 0);
-      ellipse(diff.x, diff.y, diff.radius * 2, diff.radius * 2);
-    }
+  // 미리 정의한 차이에 동그라미 그리기
+  for (let i = 0; i < differences.length; i++) {
+    let diff = differences[i];
+    fill(255, 0, 0);
+    ellipse(diff.x, diff.y, diff.radius * 2, diff.radius * 2);
+  }
 
   // 틀린 횟수 표시
   fill(0);
@@ -84,7 +84,7 @@ function draw() {
   text(`Found: ${wrongCount}/7`, 60, 900);
 
   if (wrongCount === 7) {
-    fill(225, 191, 189,150);
+    fill(225, 191, 189, 150);
     noStroke();
     rect(0, 0, 1920, 1080);
     fill(0)
@@ -93,26 +93,26 @@ function draw() {
     !clickedInsideDifference
   }
 
-// 차이 메시지 표시
-for (let i = 0; i < clickedDifferences.length; i++) {
-  let clickedDiff = clickedDifferences[i];
-  fill(0);
-  strokeWeight(5)
-  textSize(20);
+  // 차이 메시지 표시
+  for (let i = 0; i < clickedDifferences.length; i++) {
+    let clickedDiff = clickedDifferences[i];
+    fill(0);
+    strokeWeight(5)
+    textSize(20);
 
-  // 각 메시지의 Y 위치를 메시지 인덱스에 따라 조정합니다.
-  let messageY = clickedDiff.y + (i * 30); // 30은 간격 조절을 위한 값입니다.
-  
-  // 메시지가 화면 아래쪽을 벗어나지 않도록 처리합니다.
-  if (messageY < height - 30) {
-    text(clickedDiff.message, clickedDiff.x + 20, messageY);
-  }
+    // 각 메시지의 Y 위치를 메시지 인덱스에 따라 조정합니다.
+    let messageY = clickedDiff.y + (i * 30); // 30은 간격 조절을 위한 값입니다.
 
-  // 메시지가 표시된 이후 일정 시간이 지나면 메시지 삭제
-  if (frameCount - clickedDiff.displayFrame >= 60 * 3) { // 3초 동안 메시지 표시
-    clickedDifferences.splice(i, 1);
+    // 메시지가 화면 아래쪽을 벗어나지 않도록 처리합니다.
+    if (messageY < height - 30) {
+      text(clickedDiff.message, clickedDiff.x + 20, messageY);
+    }
+
+    // 메시지가 표시된 이후 일정 시간이 지나면 메시지 삭제
+    if (frameCount - clickedDiff.displayFrame >= 60 * 3) { // 3초 동안 메시지 표시
+      clickedDifferences.splice(i, 1);
+    }
   }
-}
 
 }
 
@@ -145,14 +145,14 @@ function mouseClicked() {
         strokeWeight(10);
         ellipse(diff.x + diff.width / 2, diff.y + diff.height / 2, diff.width, diff.height);
         wrongCount++;
-        
+
         // 메시지 추가
         clickedDifferences.push({
-          x: diff.x -150, // 텍스트를 차이 옆에 표시하기 위해 x 좌표 조정
+          x: diff.x - 150, // 텍스트를 차이 옆에 표시하기 위해 x 좌표 조정
           y: diff.y,
           message: messages[i] // 차이에 해당하는 메시지를 가져옴
         });
-        
+
         break; // 차이를 찾았으므로 반복문 종료
       }
     }

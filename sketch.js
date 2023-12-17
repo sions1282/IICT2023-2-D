@@ -50,32 +50,34 @@ let resetButton;
 let loveImage1, loveImage2;
 let wrongCount = 0;
 let clickedLocations = [];
-// let psyFather;
+let psyFather
+
 let differences = [
   { x: 1380, y: 630, width: 130, height: 130 }, // 딸 머리색
   { x: 1340, y: 350, width: 170, height: 170 }, // 엄마 머리색
   { x: 1560, y: 360, width: 60, height: 60 }, // 아빠이마주름
-  { x: 1560, y: 420, width: 60, height: 60 }, // 아빠입가주름
   { x: 1680, y: 850, width: 30, height: 150 }, // 아빠 지팡이
   { x: 1550, y: 770, width: 60, height: 100 }, // 아들 넥타이
   { x: 1720, y: 460, width: 80, height: 80 }, // 하트
   { x: 1450, y: 900, width: 150, height: 150 }, // 강아지
 ];
+
 let messages = [
   '20살이 됐을 때 탈색을 했었지!!',
   '우리 엄마 흰머리가 언제 이렇게 늘었어..!',
   '우리 아빠는 이마에 주름이 생겼네..!',
-  '아빠가 우리 때문에 고생을 많이 헀구나..',
   '아빠 오래오래 건강해야해!',
   '어느새 커서 교복도 입고 말이야!',
   '우리의 사랑이 더 진해졌네!',
   '우리집 막내도 생겼지!'
 ];
+
 let clickedDifferences = [];
 
 //mini4 전역변수
 let myStrength = 0;
 let maxStrength = 150000; // 벽을 부수기 위한 최대 값
+let badwordtran = 0;
 let broken = false;
 let wall;
 let hammer;
@@ -123,13 +125,20 @@ let end;
 
 //mini7 전역변수
 let swissSong;
-let displayText = false;
 let tiles = [];
 let cols = 3; // 변경
 let rows = 3; // 변경
 let w, h;
+
+let clickCount = 0;
+let currentMessage = 0;
+let currentSolveMessage = 0;
+let originalOrder = [0, 3, 6, 1, 4, 7, 2, 5, 8];
+
+// Order of tiles
 let board = [];
-let messages7 = [
+//싸움 메시지
+let fightMessages = [
   "너는 사진 찍으러 여행 왔니?",
   "배고픈데 이제 밥 먹으러 가면 안될까?",
   "여기 식당 예약했다고 하지 않았어?",
@@ -137,9 +146,6 @@ let messages7 = [
   "너가 가서 영어로 한번 물어봐바",
   "여기 기대했던 것보다는 별로네"
 ];
-let currentMessage = 0;
-let messageStartTime = 0;
-let messageDuration = 5000
 
 let solveMessages = [
   "남는건 사진 밖에 없는거야~",
@@ -149,14 +155,6 @@ let solveMessages = [
   "알았어! 내가 물어보고 올게!",
   "왜? 나는 여기 너무 좋은 것 같은데~"
 ];
-let currentSolveMessage = 0;
-let solveMessageStart = 0;
-let solveMessageDuration = 5000
-// let musicX;
-// let musicY;
-let originalOrder = [0, 3, 6, 1, 4, 7, 2, 5, 8];
-let resetButton7;
-let solveButton;
 
 
 function preload() {
@@ -175,9 +173,9 @@ function preload() {
   bg2 = loadImage('asset/flowerbg.png');
   loveImage1 = loadImage("asset/familyPhotoOri.png");
   loveImage2 = loadImage("asset/familyPhotoChange.png");
-  // psyFather = loadSound("asset/psyFather.mp3");
+  psyFather = loadSound("asset/psyFather.mp3");
   wall = loadImage("asset/wall.jpg");
-  endingcrack = loadImage('asset/crack.png');
+  endingcrack = loadImage('asset/crack.jpg');
   hammer = loadImage('asset/hammer.png');
   love = loadImage("asset/letter.jpg");
   pen = loadImage("asset/pen.png");
@@ -188,7 +186,7 @@ function preload() {
   end = loadImage("asset/ending.jpg");
   travelPuzzle = loadImage("asset/travelPuzzle.png");
   finishTravel = loadImage("asset/finishTravel.png")
-  // swissSong = loadSound("asset/swissSong.mp3")
+  swissSong = loadSound("asset/swissSong.mp3")
 }
 
 function setup() {
@@ -198,11 +196,11 @@ function setup() {
   setupMain1();
   setupMini1();
   setupMini2();
-  // setupMini3();
+  setupMini3();
   setupMini4();
   setupMini5();
   setupMini6();
-  // setupMini7();
+  setupMini7();
 }
 
 function draw() {
@@ -341,7 +339,7 @@ function mouseClicked() {
         );
 
         if (clickedInsideDiff) {
-          let clickedLocations = { x: mouseX, y: mouseY };
+          //let clickedLocation = { x: mouseX, y: mouseY };
 
           // 이미 클릭된 위치인지 확인
           let isAlreadyClicked = clickedLocations.some(loc =>
@@ -368,16 +366,15 @@ function mouseClicked() {
             break; // 차이를 찾았으므로 반복문 종료
           }
         }
-      }
-
-      if (clickedInsideDifference) {
-        // 클릭된 차이에 해당하는 메시지 추가
-        clickedDifferences.push({
-          x: diff.x - 200, // 텍스트를 차이 옆에 표시하기 위해 x 좌표 조정
-          y: diff.y,
-          message: messages[i], // 클릭된 차이에 대응하는 메시지
-          displayFrame: frameCount // 현재 프레임을 저장하여 나중에 삭제할 때 사용
-        });
+        if (clickedInsideDifference) {
+          // 클릭된 차이에 해당하는 메시지 추가
+          clickedDifferences.push({
+            x: diff.x - 200, // 텍스트를 차이 옆에 표시하기 위해 x 좌표 조정
+            y: diff.y,
+            message: messages[i], // 클릭된 차이에 대응하는 메시지
+            displayFrame: frameCount // 현재 프레임을 저장하여 나중에 삭제할 때 사용
+          });
+        }
       }
       break;
     case 'main4':
@@ -405,7 +402,8 @@ function mouseClicked() {
 
       break;
     case 'mini7':
-
+      clickCount++;
+      displayMessages();
       break;
     case 'main8':
 
@@ -914,14 +912,12 @@ function drawHome() {
 function setupMain1() {
   player = new Player(1020, 395, 5);
 }
-
 function drawMain1() {
   background(main1BG); // Display the background image
   player.update();
   player.display();
   checkInteraction1();
 }
-
 function checkInteraction1() {
   // Check if player is within the ellipse
   let ellipseX = 431, ellipseY = 246, ellipseW = 57, ellipseH = 35;
@@ -953,7 +949,6 @@ function setupMini1() {
     teacher[i].preload()
   }
 }
-
 function drawMini1() {
   background(255);
   image(bg, 0, 0, width, height);
@@ -1133,7 +1128,6 @@ function drawMini1() {
     }
   }
 }
-
 function checkCollision(student, security1, security2) {
   // Check if the student is within a certain range of the security
   let distance1 = dist(student.x, student.y, security1.x, security1.y);
@@ -1147,7 +1141,6 @@ function checkCollision(student, security1, security2) {
     return true;
   }
 }
-
 function checkCollisionWithLight(student, teacher) {
   // Check if the student is within the light cone of any teacher
   for (let i = 0; i < teacher.length; i++) {
@@ -1179,7 +1172,6 @@ function checkCollisionWithLight(student, teacher) {
     }
   }
 }
-
 function resetGame() {
   // Game reset logic
   student = new FirstPlayer(1000, 1000, 5);
@@ -1194,7 +1186,6 @@ function drawMain2() {
   player.display();
   checkInteraction2();
 }
-
 function checkInteraction2() {
   // Check if player is within the ellipse
   let ellipseX = 560, ellipseY = 498, ellipseW = 56, ellipseH = 33;
@@ -1209,7 +1200,6 @@ function checkInteraction2() {
     }
   }
 }
-
 function setupMini2() {
   // L
   flower1[0] = new Flower1(1610, 420, 0);
@@ -1252,7 +1242,6 @@ function setupMini2() {
 
   textFont(customFont);
 }
-
 function drawMini2() {
   background(255);
   image(bg2, 0, 0, width, height)
@@ -1287,7 +1276,6 @@ function drawMini2() {
     text(condition, width / 2, 250);
   }
 }
-
 function resetGame2() {
   // Reset the game state
   gainedCreativity = false;
@@ -1300,7 +1288,6 @@ function resetGame2() {
     flower1[i].resetPosition();
   }
 }
-
 function hideResetButton() {
   if (resetButton) {
     resetButton.hide();
@@ -1310,13 +1297,13 @@ function hideResetButton() {
 }
 
 function drawMain3() {
+  textAlign(CORNER);
   fill(255);
   background(main3BG); // Display the background image
   player.update();
   player.display();
   checkInteraction3();
 }
-
 function checkInteraction3() {
   // Check if player is within the ellipse
   let ellipseX = 538, ellipseY = 939, ellipseW = 55, ellipseH = 35;
@@ -1332,29 +1319,37 @@ function checkInteraction3() {
   }
 }
 
-// function setupMini3(){
-//   // createCanvas(1920, 1080);
-//   background('#FFD1E6');
-//   textSize(50);
-//   textFont(customFont);
-//   fill(255, 100, 150, 250);
-//   text("What", 50, 200);
-//   text("Is", 50, 250);
-//   text("Different?", 50, 300);
-//   image(loveImage1, 320, 30);
-//   image(loveImage2, 1120, 30);
-// }
-
+function setupMini3() {
+  //음악 버튼
+  let playButton = createButton('Music Start');
+  playButton.style('font-size', '30px');
+  playButton.style('font-family', 'neodgm')
+  playButton.style('width', '200px'); // 버튼의 너비 설정
+  playButton.style('height', '80px');
+  playButton.position(65, 700);
+  playButton.mousePressed(playMusic);
+}
 function drawMini3() {
-  background('#FFD1E6');
+  noStroke();
+  background('#EDD5C7')
+  fill('#964B00')
+  rect(300, 0, 1620, 1080)
+
   textSize(50);
   textFont(customFont);
-  fill(255, 100, 150, 250);
-  text("What", 50, 200);
-  text("Is", 50, 250);
-  text("Different?", 50, 300);
+  fill('#964B00')
+  textSize(40)
+  text("우리 가족의\n  변화를\n 찾아보자!", 45, 200);
+  fill(0);
+  textSize(20);
+  text("  오른쪽 가족사진에서\n다른 부분을 클릭해주세요!", 30, 350)
   image(loveImage1, 320, 30);
   image(loveImage2, 1120, 30);
+  fill(255)
+  textSize(30);
+  text('2010', 700, 1065)
+  text('2023', 1500, 1065)
+
   // 미리 정의한 차이에 동그라미 그리기
   for (let i = 0; i < differences.length; i++) {
     let diff = differences[i];
@@ -1366,16 +1361,16 @@ function drawMini3() {
   fill(0);
   stroke(255);
   textSize(40);
-  text(`Found: ${wrongCount}/8`, 60, 900);
+  text(`Found: ${wrongCount}/7`, 60, 900);
 
-  if (wrongCount === 8) {
-    fill(255, 100, 150, 100);
+  if (wrongCount === 7) {
+    fill(225, 191, 189, 150);
     noStroke();
     rect(0, 0, 1920, 1080);
     fill(0)
     textSize(45)
     text("우리 가족 오래오래 건강하고 행복하자!", 800, 560);
-    !clickedDifferences
+    !clickedInsideDifference
   }
 
   // 차이 메시지 표시
@@ -1399,14 +1394,13 @@ function drawMini3() {
     }
   }
 }
-
-// function playMusic() {
-//   if (psyFather.isPlaying()) {
-//     psyFather.stop(); // 현재 재생 중인 경우 멈춤
-//   } else {
-//     psyFather.play(); // 재생
-//   }
-// }
+function playMusic() {
+  if (psyFather.isPlaying()) {
+    psyFather.stop(); // 현재 재생 중인 경우 멈춤
+  } else {
+    psyFather.play(); // 재생
+  }
+}
 
 function drawMain4() {
   fill(255);
@@ -1432,25 +1426,26 @@ function checkInteraction4() {
 }
 
 function setupMini4() {
-  for (let i = 0; i < 18; i++) {
+  for (let i = 0; i < 7; i++) {
     let zone = {
-      x: random(20, width - 50),
-      y: random(20, height - 300),
+      x: random(500, width - 500),
+      y: random(100, height - 300),
       w: 150,
       h: 90,
       t: 255,
-      r: int(random(5))
+      r: int(random(4))
     };
     zones.push(zone);
+    //console.log(zones[i].t);
   }
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 15; i++) {
     let goodzones = {
-      x: random(20, width - 50),
-      y: random(20, height - 300),
+      x: random(500, width - 550),
+      y: random(100, height - 300),
       w: 150,
       h: 90,
       t: 255,
-      r: int(random(5))
+      r: int(random(4))
     };
     goodzone.push(goodzones);
   }
@@ -1461,12 +1456,13 @@ function drawMini4() {
   image(wall, 0, 0);
   fill(0);
   textFont(customFont);
-  textSize(40);
+  textSize(50);
   textAlign(CENTER);
-  text("이곳은 내 마음의 벽...", width / 2, height / 1.2);
-  text("부정적인 마음을 떨쳐 벽을 깨고... 나아가야 할 때!", width / 2, height / 1.2 + 50);
+  text("이건 내 다이어리...", width / 2, 50);
+  text("이제 보니 참 부정적이네... 다 문질러버리자!", width / 2, height / 1.2 + 50);
   textSize(27);
-  text(">부정적인 마음이 적힌 벽 부분은 어딘지 약해보인다...<", width / 2, height / 1.2 + 110);
+  text(">>부정적인 마음을 모두 *깔끔하게* 지우고 나를 사랑해보자<<", width / 2, height / 1.2 + 110);
+
   // 벽이 부서지지 않았을 때, 크랙 그리기
   if (!broken) {
     noStroke();
@@ -1490,27 +1486,33 @@ function drawMini4() {
       textSize(40);
       text(goodword[goodzones.r], goodzones.x + 15, goodzones.y + 25);
     }
+
+    if (badwordtran > 4) { // 절반 정도 도달하면 거의 부서졌다는 메시지 출력
+      fill(255, 206, 232);
+      rect(40, 70, 650, 50, 15);
+      triangle(300, 120, 400, 120, 470, 150);
+      fill(173, 7, 107);
+      textFont(customFont);
+      textSize(30);
+      textAlign(CENTER);
+      text("거의 다 지운 것 같다. 조금만 더 지워보자!", width / 6 + 40, 80);
+    }
   } else {  // 벽이 부서졌을 때
     background(130, 199, 299);
     image(endingcrack, 0, 0, width, height);
     // 엔딩 후 메시지박스
-    fill(255);
+    fill(111, 55, 0);
     textFont(customFont);
     textSize(80);
     textAlign(CENTER);
-    text("마음의 벽이 깨졌다!", width / 2, height / 2 - 105);
-    textSize(60);
-    text("그동안은 내가 나를", width / 2, height / 2 + 10);
-    text("사랑해주지 못했던 것 같아..", width / 2, height / 2 + 80);
-    text("이제는 나를 더", width / 2, height / 2 + 160);
-    text("사랑해줘야지.\n \n (n키를 눌러주세요!)", width / 2, height / 2 + 230);
+    text("다 지웠다!", width / 2, height / 2 - 105);
+    textSize(40);
+    text("내가 이렇게나 부정적이었구나.. \n 긍정적으로 살자. \n 그게 나를 더 사랑해주는 길이니까.", width / 2, height / 2 + 10);
+
   }
 
   // 벽 부수기 시도
   if (mouseIsPressed && !broken) {
-    // let x = mouseX;
-    // let y = mouseY;
-
     // 클릭한 위치가 특정 구역 내에 있는지 확인
     for (let i = 0; i < zones.length; i++) {
       let zone = zones[i];
@@ -1520,26 +1522,33 @@ function drawMini4() {
 
         // 벽을 부수는 흔적 그리기
         fill(255, 0, 0, transparency);
-        ellipse(mouseX, mouseY, 50, 50);
+        stroke(252, 148, 149, transparency);
+        strokeWeight(8);
+        line(mouseX, mouseY, mouseX - 15, mouseY - 20);
+        line(mouseX - 30, mouseY - 20, mouseX - 15, mouseY - 20);
+        line(mouseX - 5, mouseY + 10, mouseX - 30, mouseY + 10);
+        line(mouseX - 40, mouseY + 15, mouseX - 30, mouseY + 10);
+        line(mouseX + 5, mouseY + 20, mouseX + 15, mouseY + 30);
+        line(mouseX + 5, mouseY + 40, mouseX + 15, mouseY + 30);
+        line(mouseX + 5, mouseY + 40, mouseX + 15, mouseY + 50);
+        noStroke();
         zone.t -= 5;
-        //tran -= 1;
+
+        if (zones[i].t == 0) {
+          badwordtran += 1;
+        }
 
         // 부순 효과
         myStrength += transparency;
-        if (myStrength >= maxStrength / 2) {
-          fill(255, 0, 0);
-          textFont(customFont);
-          textSize(70);
-          textAlign(CENTER);
-          text("벽이 거의 부서졌습니다!", width / 2, 20);
-        }
-        if (myStrength >= maxStrength) {
+
+        if (badwordtran == 7) { // 벽이 깨지는 조건
           broken = true;
         }
       }
     }
   }
-  image(hammer, mouseX - 90, mouseY - 50);
+  // 마우스 커서 대신에 지우개 따라다니기
+  image(hammer, mouseX + 10, mouseY - 100);
 }
 
 function drawMain5() {
@@ -1830,74 +1839,44 @@ function checkInteraction7() {
   }
 }
 
-// function setupMini7() {
-//   createCanvas(1920, 1080); // 변경
-//   // pixel dimensions of each tile
-//   w = 1080 / cols;
-//   h = 1080 / rows;
+function setupMini7() {
+  createCanvas(1920, 1080); // 변경
+  // pixel dimensions of each tile
+  w = 1080 / cols;
+  h = 1080 / rows;
 
-//   //음악 버튼
-//   // let playButton = createButton('Music Start');
-//   // playButton.style('font-size', '30px');
-//   // playButton.style('font-family', 'neodgm')
-//   // playButton.style('width', '200px'); // 버튼의 너비 설정
-//   // playButton.style('height', '80px');
-//   // playButton.position(1400, 770);
-//   // playButton.mousePressed(playMusic);
+  // 음악 버튼
+  let playButton = createButton('Music Start');
+  playButton.style('font-size', '30px');
+  playButton.style('font-family', 'neodgm')
+  playButton.style('width', '200px'); // 버튼의 너비 설정
+  playButton.style('height', '80px');
+  playButton.position(1400, 850);
+  playButton.mousePressed(playMusic);
 
-//   // Chop up source image into tiles
-//   for (let i = 0; i < cols; i++) {
-//     for (let j = 0; j < rows; j++) {
-//       let x = i * w;
-//       let y = j * h;
-//       let img = createImage(w, h);
-//       img.copy(travelPuzzle, x, y, w, h, 0, 0, w, h);
-//       let index = i + j * cols;
-//       board.push(index);
-//       let tile = new Tile(index, img);
-//       tiles.push(tile);
-//     }
+  // Chop up source image into tiles
+  for (let i = 0; i < cols; i++) {
+    for (let j = 0; j < rows; j++) {
+      let x = i * w;
+      let y = j * h;
+      let img = createImage(w, h);
+      img.copy(travelPuzzle, x, y, w, h, 0, 0, w, h);
+      let index = i + j * cols;
+      board.push(index);
+      let tile = new Tile(index, img);
+      tiles.push(tile);
+    }
+  }
 
-//     //조작키
-//     resetButton7 = createButton('Reset');
-//     resetButton7.position(1250, 900);
-//     resetButton7.size(200, 100)
-//     resetButton7.style('font-size', '40px');
-//     resetButton7.style('background-color', '#FF69B4'); // 핑크색 배경
-//     resetButton7.style('color', '#FFFFFF');
-//     resetButton7.style('font-family', 'neodgm')
-//     resetButton7.mousePressed(resetPuzzle);
+  // Remove the last tile
+  tiles.pop();
+  board.pop();
+  // -1 means an empty spot
+  board.push(-1);
 
-//     solveButton = createButton('Solve');
-//     solveButton.position(1550, 900);
-//     solveButton.size(200, 100)
-//     solveButton.style('font-size', '40px');
-//     solveButton.style('background-color', '#FF69B4'); // 핑크색 배경
-//     solveButton.style('color', '#FFFFFF');
-//     solveButton.style('font-family', 'neodgm')
-//     solveButton.mousePressed(solvePuzzle);
-
-//     setTimeout(() => {
-//       solveButton.mousePressed(solvePuzzle);
-//       solveButton.removeAttribute('disabled');
-//     }, 10000);
-//     solveButton.attribute('disabled', 'true'); // 초기에 비활성화
-
-//     // musicX = 1200
-//     // musicY = 750
-//   }
-
-//   // Remove the last tile
-//   tiles.pop();
-//   board.pop();
-//   // -1 means an empty spot
-//   board.push(-1);
-
-//   // Shuffle the board
-//   simpleShuffle(board);
-
-//   setTimeout(showMessage, 60000);
-// }
+  // Shuffle the board
+  simpleShuffle(board);
+}
 
 // Swap two elements of an array
 function swap(i, j, arr) {
@@ -1922,9 +1901,11 @@ function simpleShuffle(arr) {
 }
 
 function drawMini7() {
-  cursor();
-  background('#B3E0FF');
-
+  background('#A4BDDA');
+  fill(0)
+  rect(1080, 0, 900, 1080)
+  fill('#A4BDDA')
+  rect(1100, 20, 790, 1040)
   // Draw the current board
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
@@ -1954,48 +1935,13 @@ function drawMini7() {
   if (isSolved()) {
     fill(255, 100, 150, 150);
     rect(0, 0, 1080, 1080);
-    image(finishTravel, 1550, 400)
+    image(travelPuzzle, 540, 540)
 
     // Display "완성했습니다!" message
     textFont(customFont)
     textSize(40);
     fill(255);
-    text('가족들과 행복한 스위스여행을 마쳤습니다! (n키를 누르세요!)', 1000, height / 2);
-  }
-
-
-  //싸움메시지 
-  if (millis() - messageStartTime > messageDuration) {
-    if (currentMessage < messages.length - 1) {
-      currentMessage++;
-    } else {
-      currentMessage = 0;
-    }
-    messageStartTime = millis();
-  }
-
-  // 화해 메시지 전환
-  if (millis() - solveMessageStart > solveMessageDuration) {
-    if (currentSolveMessage < solveMessages.length - 1) {
-      currentSolveMessage++;
-    } else {
-      currentSolveMessage = 0;
-    }
-    solveMessageStart = millis();
-  }
-  //음악재생바
-  // fill(255);
-  // rect(1200, 750, 600, 5);
-  // for (let x = 1200; x < min(musicX, 1800); x++) {
-  //   circle(x, musicY, 20);
-  // }
-  // musicX += 0.1;
-
-
-  if (displayText) {
-    fill(0);
-    textSize(24);
-    text("정말 해결하기 어려울 때 solve 버튼을 눌러주세요!", 1800, 100);
+    text('가족들과 행복한 스위스여행을 마쳤습니다!', 950, 50);
   }
 }
 
@@ -2061,25 +2007,28 @@ function solvePuzzle() {
 }
 
 function travelTalk() {
-  // (1300, 200) 위치에 이미지 그리기
+  noStroke();
+  fill('#4B89DC')
+  rect(1120, 160, 750, 250)
   fill(255);
-  rect(1150, 160, 700, 60)
-  fill(0);
-  textSize(30);
+  textSize(27);
   push();
   textFont(customFont)
   textAlign(CENTER);
-  text("가족들과의 즐거운 여행을 완성해보세요! ", 1520, 200);
+  text(
+    "가족들과 여행하다보면\n종종 피곤하고 짜증나는 순간들이 있다.\n그럼에도 돌아보면 행복했던 기억들이 대부분인 것 같다!", 1500, 200);
+  text("인내심을 갖고 갈등을 해결하며\n행복한 가족 여행을 완성해보자!", 1510, 305);
+  text("(마우스로 퍼즐을 클릭해 사진을 완성해주세요!)", 1510, 380);
   pop();
 }
 
-// function playMusic() {
-//   if (swissSong.isPlaying()) {
-//     swissSong.stop(); // 현재 재생 중인 경우 멈춤
-//   } else {
-//     swissSong.play(); // 재생
-//   }
-// }
+function playMusic() {
+  if (swissSong.isPlaying()) {
+    swissSong.stop(); // 현재 재생 중인 경우 멈춤
+  } else {
+    swissSong.play(); // 재생
+  }
+}
 
 function showMessage() {
   displayText = true; // showMessage 함수가 호출되면 displayText를 true로 설정하여 텍스트를 표시
@@ -2087,25 +2036,37 @@ function showMessage() {
 
 function displayMessage1(message) {
   fill(255);
-  rect(1230, 310, 600, 70)
+  rect(1230, 480, 600, 70)
   fill(0)
-  textAlign(LEFT);
+  textAlign(CENTER);
   textFont(customFont)
-  ellipse(1180, 330, 50, 50)
-  rect(1155, 355, 50, 50)
+  ellipse(1180, 470, 50, 50)
+  rect(1155, 500, 50, 50)
   fill(0)
-  text(message, 1250, 330, 1000, 200); // 메시지 위치 및 내용
+  text(message, 1490, 520); // 메시지 위치 및 내용
 }
 
 function displayMessage2(message) {
   textAlign(RIGHT);
   textFont(customFont)
   fill(255)
-  rect(1200, 480, 560, 70)
-  ellipse(1810, 490, 50, 50)
-  rect(1785, 515, 50, 50)
+  rect(1200, 600, 560, 70)
+  ellipse(1810, 590, 50, 50)
+  rect(1785, 615, 50, 50)
   fill(0);
-  text(message, 750, 500, 1000, 200); // 메시지 위치 및 내용
+  text(message, 750, 620, 1000, 200); // 메시지 위치 및 내용
+}
+
+function displayMessages() {
+  if (clickCount >= 10 && clickCount % 10 === 0 && currentMessage < messages.length) {
+    displayMessage1(messages[currentMessage]);
+    currentMessage++;
+  }
+
+  if (clickCount >= 10 && clickCount % 10 === 0 && currentSolveMessage < solveMessages.length) {
+    displayMessage2(solveMessages[currentSolveMessage]);
+    currentSolveMessage++;
+  }
 }
 
 function drawMain8() {
