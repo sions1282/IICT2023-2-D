@@ -13,22 +13,21 @@ class FirstPlayer {
     // let topLimit = 0;
     // let bottomLimit = 1080;
 
-    // 이동제한성    
-    if (height / 4 <= this.y && this.y <= height / 4 + 150 &&
-      this.x <= 1150) {
-      if (keyIsDown(DOWN_ARROW)) {
-        this.y = height / 4 - 30
-      } else if (keyIsDown(UP_ARROW)) {
-        this.y = height / 4 + 170
+    // 이동제한성
+    if (this.y <= height / 4 + 170 && this.x <= 1150) {
+      // if (keyIsDown(DOWN_ARROW)) {
+      //   this.y = height / 4 - 30;
+      // } else 
+      if (keyIsDown(UP_ARROW)) {
+        this.y = height / 4 + 170;
       }
     }
-
-    if (height / 4 <= this.y && this.y <= height / 4 + 150 &&
-      this.x >= 1500) {
-      if (keyIsDown(DOWN_ARROW)) {
-        this.y = height / 4 - 30
-      } else if (keyIsDown(UP_ARROW)) {
-        this.y = height / 4 + 170
+    if (this.y <= height / 4 + 170 && this.x >= 1500) {
+      // if (keyIsDown(DOWN_ARROW)) {
+      //   this.y = height / 4 - 30;
+      // } else
+      if (keyIsDown(UP_ARROW)) {
+        this.y = height / 4 + 170;
       }
     }
 
@@ -38,13 +37,21 @@ class FirstPlayer {
     if (keyIsDown(RIGHT_ARROW) && this.x + this.diameter / 2 < rightLimit) {
       this.x += this.speed;
     }
-    if (keyIsDown(UP_ARROW) && (this.y + this.diameter / 2 != 720 || this.x <= 300) && this.y >= 10) {
+    if (
+      keyIsDown(UP_ARROW) &&
+      (this.y + this.diameter / 2 != 720 || this.x <= 300) &&
+      this.y >= 10
+    ) {
       this.y -= this.speed;
     }
-    if (keyIsDown(DOWN_ARROW) && (this.y + 60 != 720 || this.x <= 300) && this.y <= 1020) {
+
+    if (
+      keyIsDown(DOWN_ARROW) &&
+      (this.y + 60 != 720 || this.x <= 300) &&
+      this.y <= 1020
+    ) {
       this.y += this.speed;
     }
-
   }
 
   display1() {
@@ -57,14 +64,11 @@ class FirstPlayer {
     ellipse(0, 0, 40, 14); // Left arm
     pop();
 
-
-
     push();
     translate(this.x + 14, this.y + 22);
     rotate(radians(30));
     ellipse(0, 0, 40, 14); // Right arm
     pop();
-
 
     push();
     translate(this.x - 7, this.y + 41);
@@ -72,17 +76,15 @@ class FirstPlayer {
     ellipse(0, 0, 19, 51); // Left leg
     pop();
 
-
     push();
     translate(this.x + 10, this.y + 41);
     rotate(radians(330));
     ellipse(0, 0, 19, 51); // Right leg
     pop();
-
   }
 
   display2() {
-    ellipse(this.x + 50, this.y, 30); // Head2 
+    ellipse(this.x + 50, this.y, 30); // Head2
     push();
     translate(this.x + 39, this.y + 22);
     rotate(radians(330));
@@ -106,10 +108,8 @@ class FirstPlayer {
     rotate(radians(330));
     ellipse(0, 0, 19, 51); // Right leg2
     pop();
-
   }
 }
-
 
 class Security {
   constructor(x, y, speed) {
@@ -118,12 +118,12 @@ class Security {
     this.speed = speed;
     this.width = 30;
     this.height = 30;
-    this.securityImage0 = null;
+    this.securityImage0 = securityImage
   }
 
-  preload() {
-    this.securityImage0 = loadImage('asset/security.png')
-  }
+  // preload() {
+  //   this.securityImage0 = loadImage('asset/security.png')
+  // }
 
   display1() {
     push();
@@ -147,13 +147,8 @@ class Teacher extends FirstPlayer {
     this.lightRadius = 100;
     this.lightAngle = 0;
     this.lightConeAngle = PI / 4; // 부채꼴 모양의 각도 (45도)
+    this.teacherImage = teacherImage
   }
-
-  preload() {
-    this.teacherImage = loadImage('asset/teacher.png')
-
-  }
-
 
   // update 메서드 오버라이드: 빛의 회전 구현
   update() {

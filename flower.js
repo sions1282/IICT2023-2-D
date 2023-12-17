@@ -4,37 +4,31 @@ class Flower0 {
     this.initialPosition = createVector(x, y);
     this.angle = angle;
     this.initialAngle = angle; // 초기 회전 각도 저장
-    this.flowerImage0 = null;
+    this.roseImage0 = roseImage0
     this.isBeingDragged = false;
-
-  }
-
-  preload() {
-    // 클래스 내부에서 이미지 로드
-    this.flowerImage0 = loadImage('asset/rose0.png');
   }
 
   draw() {
     push();
-    imageMode(CENTER)
+    imageMode(CENTER);
     // 이미지의 중심을 (0, 0)으로 설정
     translate(this.position.x, this.position.y);
 
     // 회전 적용
     rotate(this.angle);
     noStroke();
-    image(this.flowerImage0, 0, 0, 100, 350);
-
-
-    //   ellipseMode(CENTER)
-    //   noFill();
-    //   stroke(0);
-    // ellipse(0, -150, 30)
-    // 이미지의 중심점을 원래 위치로 이동
-
+    image(this.roseImage0, 0, 0, 100, 350);
+    if (this.isMouseOver()) {
+      fill(0, 100);
+      circle(0, 0, 60);
+    }
     pop();
   }
 
+  isMouseOver() {
+    let d = dist(mouseX, mouseY, this.position.x, this.position.y);
+    return d <= 30;
+  }
 
   startDragging() {
     let d = dist(mouseX, mouseY, this.position.x, this.position.y);
@@ -61,17 +55,29 @@ class Flower0 {
 
   rotateClockwise() {
     this.angle += QUARTER_PI; // 회전 각도를 증가시킴
-    this.angle = this.angle % (TWO_PI); // 각도가 360도를 넘어가면 360도로 나눈 나머지로 설정
-
-
+    this.angle = this.angle % TWO_PI; // 각도가 360도를 넘어가면 360도로 나눈 나머지로 설정
   }
 
   resetPosition() {
     this.position.set(this.initialPosition.x, this.initialPosition.y);
     this.angle = this.initialAngle; // 저장된 초기 회전 각도로 초기화
   }
+  mouseClicked() {
+    if (!this.isBeingDragged) {
+      this.angle += PI / 2
+      console.log("clicked")
+    }
+    this.isBeingDragged = false;;
+  }
+  mouseDragged() {
+    this.position.x = mouseX;
+    this.position.y = mouseY;
+    this.isBeingDragged = true;
+  }
+  mousePressed() {
+    this.isBeingDragged = false;;
+  }
 }
-
 
 class Flower1 {
   constructor(x, y, angle) {
@@ -79,28 +85,54 @@ class Flower1 {
     this.initialPosition = createVector(x, y);
     this.angle = angle;
     this.initialAngle = angle; // 초기 회전 각도 저장
-    this.flowerImage1 = null;
+    this.roseImage1 = roseImage1
     this.isBeingDragged = false;
-
-  }
-
-  preload() {
-    // 클래스 내부에서 이미지 로드
-    this.flowerImage1 = loadImage('asset/rose1.png');
   }
 
   draw() {
     push();
-    imageMode(CENTER)
+    imageMode(CENTER);
     translate(this.position.x, this.position.y);
     rotate(this.angle);
 
     noStroke();
-    image(this.flowerImage1, 0, 0, 350, 100);
+    image(this.roseImage1, 0, 0, 350, 100);
+    if (this.isMouseOver()) {
+      fill(0, 100);
+      circle(0, 0, 60);
+    }
+
 
     pop();
   }
 
+  isMouseOver() {
+    let d = dist(mouseX, mouseY, this.position.x, this.position.y);
+    return d <= 30;
+  }
+
+  startDragging() {
+    let d = dist(mouseX, mouseY, this.position.x, this.position.y);
+    if (d <= 30) {
+      this.isBeingDragged = true;
+    }
+  }
+
+  stopDragging() {
+    this.isBeingDragged = false;
+  }
+
+  drag() {
+    if (this.isBeingDragged) {
+      this.position.x = mouseX;
+      this.position.y = mouseY;
+    }
+  }
+
+  isMouseOver() {
+    let d = dist(mouseX, mouseY, this.position.x, this.position.y);
+    return d <= 30;
+  }
 
   startDragging() {
     let d = dist(mouseX, mouseY, this.position.x, this.position.y);
@@ -127,11 +159,27 @@ class Flower1 {
 
   rotateClockwise() {
     this.angle += QUARTER_PI; // 회전 각도를 증가시킴
-    this.angle = this.angle % (TWO_PI); // 각도가 360도를 넘어가면 360도로 나눈 나머지로 설정
+    this.angle = this.angle % TWO_PI; // 각도가 360도를 넘어가면 360도로 나눈 나머지로 설정
   }
 
   resetPosition() {
     this.position.set(this.initialPosition.x, this.initialPosition.y);
     this.angle = this.initialAngle; // 저장된 초기 회전 각도로 초기화
+  }
+
+  mouseClicked() {
+    if (!this.isBeingDragged) {
+      this.angle += PI / 2
+      console.log("clicked")
+    }
+    this.isBeingDragged = false;;
+  }
+  mouseDragged() {
+    this.position.x = mouseX;
+    this.position.y = mouseY;
+    this.isBeingDragged = true;
+  }
+  mousePressed() {
+    this.isBeingDragged = false;;
   }
 }
