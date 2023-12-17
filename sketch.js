@@ -301,7 +301,7 @@ function draw() {
 }
 
 function keyPressed() {
-  if (keyCode === 78) { // 'N' 키
+  if (keyCode === 13) { // 'enter' 키
     if (stateNow === "mini1") {
       stateNow = "main2";
     } else if (stateNow === "mini2") {
@@ -357,7 +357,7 @@ function keyPressed() {
       if (homeCount != 1 && keyCode === ENTER) {
         homeCount += 1;
       }
-      if (homeCount == 5 && keyCode === 32) {
+      if (homeCount >= 5 && keyCode === 32) {
         stateNow = "main1";
       }
       break;
@@ -659,10 +659,19 @@ function drawTitle() {
   background(titleBG);
   if (frameCount % 60 < 30) {
     fill(0, 0, 0, 0);
-  } else fill(8, 79, 106);
-  textSize(50);
-  textFont(customFont);
-  text("'Spacebar'를 눌러 게임을 시작하세요!", 540, height * 4 / 5);
+  } else {
+    fill(255);
+    rectMode(CENTER);
+    stroke(8, 79, 106);
+    strokeWeight(3);
+    rect(635, 850, 240, 60);
+    rectMode(CORNER);
+    noStroke();
+    fill(8, 79, 106);
+    textSize(50);
+    textFont(customFont);
+    text("Spacebar  를 눌러 게임을 시작하세요!", 540, height * 4 / 5);
+  }
   titlesnowFlakes();
 }
 function titlesnowFlakes() {
@@ -947,21 +956,51 @@ function drawHouse(x, y, width, height) {
 }
 function notice() {
   //안내멘트
+  rectMode(CENTER);
+  stroke(255);
+  strokeWeight(3);
+  fill(50, 50, 150);
+  rect(330, 120, 60, 45);
+  rect(410, 120, 60, 45);
+  rectMode(CORNER);
   noStroke();
   textFont(customFont);
   fill(255);
   textSize(40);
-  text("'<-, ->' 키를 눌러 이동하세요!", 310, 130)
+  text("<-  ->  키를 눌러 이동하세요!", 310, 130)
+  rectMode(CENTER);
+  stroke(255);
+  strokeWeight(3);
+  fill(50, 50, 150);
+  rect(570, 192, 100, 45);
+  noStroke();
+  rectMode(CORNER);
+  textFont(customFont);
+  fill(255);
   textSize(30);
-  text("메시지가 도착하면 'ENTER' 키를 누른 채로 읽어주세요!", 250, 200)
+  text("메시지가 도착하면         키를 누른 채로 읽어주세요!", 250, 200);
+  fill(255);
+  text("ENTER", 533, 200);
   text("Merry Christmas", 1500, 870)
 
   if (startCharacter.x > 1050) {
+    rectMode(CENTER);
+    stroke(255);
+    strokeWeight(3);
+    fill(50, 50, 150);
+    rect(385, 1005, 170, 45);
+    rectMode(CORNER);
     noStroke();
     textFont(customFont);
     fill(0);
     textSize(35);
-    text("     3개의 메시지를 모두 읽었다면\n'spacebar'를 눌러 집으로 들어가세요!", 300, 970)
+    text(
+      "     3개의 메시지를 모두 읽었다면\n           를 눌러 집으로 들어가세요!",
+      300,
+      970
+    );
+    fill(255);
+    text("spacebar", 317, 1012);
   }
 }
 function setupHome() {
@@ -1133,10 +1172,12 @@ function drawHome() {
       200 < homePlayer.y &&
       homePlayer.y < 250
     ) {
-      if (frameCount % 60 < 30) {
-        fill(255);
-        text("Press  ENTER", 660, 100);
-      }
+      fill(255);
+      text("Press  ENTER", 660, 100);
+      fill(240);
+      rect(1310, 30, 580, 900);
+      rectMode(CENTER);
+      rect(850, 90, 95, 110);
     }
   }
 
@@ -1192,7 +1233,7 @@ function drawHome() {
   }
 
   //안내창 멘트 5
-  if (homeCount == 5) {
+  if (homeCount >= 5) {
     appOpen();
     noStroke();
     textFont(customFont);
@@ -1539,6 +1580,7 @@ function setupMini2() {
   flower1[5] = new Flower1(220, 740, 0);
 
   resetButton = createButton("Reset");
+  resetButton.parent('p5-doms');
 
   resetButton.position(10, height - 150);
   resetButton.mousePressed(resetGame);
@@ -1634,6 +1676,7 @@ function checkInteraction3() {
 function setupMini3() {
   //음악 버튼
   playButton3 = createButton('Music Start');
+  playButton3.parent('p5-doms');
   playButton3.style('font-size', '30px');
   playButton3.style('font-family', 'neodgm')
   playButton3.style('width', '200px'); // 버튼의 너비 설정
@@ -1895,7 +1938,7 @@ function checkInteraction5() {
 }
 
 function setupMini5() {
-  catcher = new Catcher();
+  catcher = new Catcher(100);
   catcher.setLocation(width / 2, height - 70);
   noCursor();
   noStroke();
@@ -1968,7 +2011,6 @@ function drawMini5() {
       text("늘 내 편을 들어주는 네가 있어서", width / 2, height / 2 - 60);
       text("늘 고맙고 든든해.", width / 2, height / 2);
       text("앞으로도 우리 우정 영원하자", width / 2, height / 2 + 60);
-      noLoop();
     }
   } else {
     if (instruction) {
@@ -2087,7 +2129,10 @@ function drawMini6() {
   text("(얼마나 달래야 할까...? 일단 마구 달래보자!)", width / 2, 150);
   textSize(30);
   fill(0);
-  text("<조작법> \n ->, <- : 좌우 이동, spacebar : 화해 총알 발사!", width / 2, 200);
+  text("<조작법> \n           : 좌우 이동,            : 화해 총알 발사!", width / 2, 200);
+  fill(255);
+  text("<-   ->", 665, 237);
+  text("spacebar", 1010, 237);
   image(gun, playerX, playerY - 100);
   mini = new Player(playerX, playerY - 55, 10);
   mini.display();
@@ -2126,7 +2171,7 @@ function drawMini6() {
     textAlign(CENTER, CENTER);
     stroke(255);
     strokeWeight(10);
-    text('애인(이)가 삐짐 상태를 해지했습니다!\n(n키를 누르세요!)', width / 2, height / 2);
+    text('애인(이)가 삐짐 상태를 해지했습니다!\n(Enter를 누르세요!)', width / 2, height / 2);
     noStroke();
   }
 
@@ -2175,6 +2220,7 @@ function setupMini7() {
 
   // 음악 버튼
   playButton7 = createButton('Music Start');
+  playButton7.parent('p5-doms');
   playButton7.style('font-size', '30px');
   playButton7.style('font-family', 'neodgm')
   playButton7.style('width', '200px'); // 버튼의 너비 설정
@@ -2257,13 +2303,19 @@ function drawMini7() {
     //퍼즐 안내메시지
     if (!isSolved()) {
       travelTalk();
+      const maxMessageIndex = solveMessages.length - 1;
+
       if (clickCount % 15 >= 5) {
-        displayMessage1(fightMessages[currentMessage]);
-      }
-      if (clickCount % 15 >= 10) {
-        displayMessage2(solveMessages[currentSolveMessage]);
+        if (currentMessage <= maxMessageIndex) {
+          displayMessage1(fightMessages[currentMessage]);
+        }
       }
 
+      if (clickCount % 15 >= 10) {
+        if (currentSolveMessage <= maxMessageIndex) {
+          displayMessage2(solveMessages[currentSolveMessage]);
+        }
+      }
     }
   }
 
@@ -2355,7 +2407,7 @@ function travelTalk() {
   textFont(customFont)
   textAlign(CENTER);
   text(
-    "가족들과 여행하다보면\n종종 피곤하고 짜증나는 순간들이 있다.\n그럼에도 돌아보면 행복했던 기억들이 대부분인 것 같다!\n인내심을 갖고 갈등을 해결하며\n행복한 가족 여행을 완성해보자!\n(마우스로 퍼즐을 클릭해 사진을 완성해주세요!)", 1500, 192);
+    "가족들과 여행하다보면\n종종 피곤하고 짜증나는 순간들이 있다.\n그럼에도 돌아보면 행복했던 기억들이 대부분인 것 같다!\n인내심을 갖고 갈등을 해결하며\n행복한 가족 여행을 완성해보자!\n(마우스로 퍼즐을 클릭해 사진을 완성해주세요!)", 1500, 185);
   pop();
 }
 
@@ -2380,7 +2432,7 @@ function displayMessage1(message) {
   ellipse(1180, 470, 50, 50)
   rect(1155, 500, 50, 50)
   fill(0)
-  text(message, 1490, 520); // 메시지 위치 및 내용
+  text(message, 1490, 515); // 메시지 위치 및 내용
 }
 
 function displayMessage2(message) {
@@ -2391,7 +2443,7 @@ function displayMessage2(message) {
   ellipse(1810, 590, 50, 50)
   rect(1785, 615, 50, 50)
   fill(0);
-  text(message, 750, 640, 1000, 210); // 메시지 위치 및 내용
+  text(message, 750, 635, 1000, 210); // 메시지 위치 및 내용
 }
 
 function displayMessages() {
