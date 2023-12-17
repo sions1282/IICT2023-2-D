@@ -659,10 +659,19 @@ function drawTitle() {
   background(titleBG);
   if (frameCount % 60 < 30) {
     fill(0, 0, 0, 0);
-  } else fill(8, 79, 106);
-  textSize(50);
-  textFont(customFont);
-  text("'Spacebar'를 눌러 게임을 시작하세요!", 540, height * 4 / 5);
+  } else {
+    fill(255);
+    rectMode(CENTER);
+    stroke(8, 79, 106);
+    strokeWeight(3);
+    rect(635,850,240,60);
+    rectMode(CORNER);
+    noStroke();
+    fill(8,79,106);
+    textSize(50);
+    textFont(customFont);
+    text("Spacebar  를 눌러 게임을 시작하세요!", 540, height * 4 / 5);
+    }
   titlesnowFlakes();
 }
 function titlesnowFlakes() {
@@ -947,21 +956,52 @@ function drawHouse(x, y, width, height) {
 }
 function notice() {
   //안내멘트
+  rectMode(CENTER);
+  stroke(255);
+  strokeWeight(3);
+  fill(50,50,150);
+  rect(330,120,60,45);
+  rect(410,120,60,45);
+  rectMode(CORNER);
   noStroke();
   textFont(customFont);
   fill(255);
   textSize(40);
-  text("'<-, ->' 키를 눌러 이동하세요!", 310, 130)
+  text("<-  ->  키를 눌러 이동하세요!", 310, 130)
+  rectMode(CENTER);
+  stroke(255);
+  strokeWeight(3);
+  fill(50, 50, 150);
+  rect(570, 192, 100, 45);
+  noStroke();
+  rectMode(CORNER);
+  
+  textFont(customFont);
+  fill(255);
   textSize(30);
-  text("메시지가 도착하면 'ENTER' 키를 누른 채로 읽어주세요!", 250, 200)
+  text("메시지가 도착하면         키를 누른 채로 읽어주세요!", 250, 200);
+  fill(255);
+  text("ENTER",533,200);
   text("Merry Christmas", 1500, 870)
 
   if (startCharacter.x > 1050) {
+    rectMode(CENTER);
+    stroke(255);
+    strokeWeight(3);
+    fill(50, 50, 150);
+    rect(385, 1005, 170, 45);
+    rectMode(CORNER);
     noStroke();
     textFont(customFont);
     fill(0);
     textSize(35);
-    text("     3개의 메시지를 모두 읽었다면\n'spacebar'를 눌러 집으로 들어가세요!", 300, 970)
+    text(
+      "     3개의 메시지를 모두 읽었다면\n           를 눌러 집으로 들어가세요!",
+      300,
+      970
+    );
+    fill(255);
+    text("spacebar",317,1012);
   }
 }
 function setupHome() {
@@ -2088,7 +2128,10 @@ function drawMini6() {
   text("(얼마나 달래야 할까...? 일단 마구 달래보자!)", width / 2, 150);
   textSize(30);
   fill(0);
-  text("<조작법> \n ->, <- : 좌우 이동, spacebar : 화해 총알 발사!", width / 2, 200);
+  text("<조작법> \n           : 좌우 이동,            : 화해 총알 발사!", width / 2, 200);
+  fill(255);
+  text("<-   ->", 665, 237);
+  text("spacebar", 1010, 237);
   image(gun, playerX, playerY - 100);
   mini = new Player(playerX, playerY - 55, 10);
   mini.display();
