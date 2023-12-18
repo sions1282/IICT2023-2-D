@@ -1979,7 +1979,7 @@ function drawMini4() {
   text("이건 내 다이어리...", width / 2, 50);
   text("이제 보니 참 부정적이네... 다 문질러버리자!", width / 2, height / 1.2 + 50);
   textSize(27);
-  text(">>부정적인 마음을 모두 *깔끔하게* 지우고 나를 사랑해보자<<", width / 2, height / 1.2 + 110);
+  text(">>마우스로 부정적인 마음을 모두 *깔끔하게* 지우고 나를 사랑해보자<<", width / 2, height / 1.2 + 110);
 
   // 벽이 부서지지 않았을 때, 크랙 그리기
   if (!broken) {
@@ -2259,6 +2259,36 @@ function drawMini5() {
   text("ㅡ", width - 205, 140);
   text("ㅡ", width - 145, 140);
   text("ㅡ", width - 85, 140);
+  textSize(25);
+  text("(순서대로 쓰지 않아도 상관없어)", width-250, 200);
+
+  push();
+  translate(-1500,0);
+  rectMode(CENTER);
+  stroke(255);
+  strokeWeight(3);
+  fill(50, 50, 150);
+  rect(1672, 143, 60, 45);
+  rect(1742, 143, 60, 45);
+  rect(1812, 143, 60, 45);
+  rect(1742, 88, 60, 45);
+  rectMode(CORNER);
+  noStroke();
+  textFont(customFont);
+  textSize(40);
+  textAlign(CENTER, CENTER);
+  fill(255);
+  text("<-", width - 250, 140);
+  text("->", width - 105, 140);
+  push();
+  translate(width / 2, height / 2);
+  rotate(radians(90));
+  text("<", -460, -785);
+  text("-", -445, -785);
+  text(">", -388, -785);
+  text("-", -402, -785);
+  pop();
+  pop();
 }
 
 function drawMain6() {
