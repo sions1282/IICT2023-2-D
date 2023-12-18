@@ -42,6 +42,7 @@ let gameState = "playing";
 let enemy = [];
 let securityImage;
 let teacherImage;
+let mini1Ending;
 
 //mini2 전역변수
 let flower0 = [];
@@ -54,6 +55,7 @@ let resetButton;
 let roseImage0;
 let roseImage1;
 let selectedFlower;
+let mini2Ending;
 
 //mini3 전역변수
 let playButton3;
@@ -185,10 +187,12 @@ function preload() {
   bg = loadImage('asset/classbg.png');
   securityImage = loadImage('asset/security.png');
   teacherImage = loadImage('asset/teacher.png');
+  mini1Ending = loadImage('asset/mini1Ending.jpg');
   bg2 = loadImage('asset/flowerbg.png');
   roseImage0 = loadImage('asset/rose0.png');
   roseImage1 = loadImage('asset/rose1.png');
   kiss = loadImage('asset/kiss.png');
+  mini2Ending = loadImage('asset/mini2Ending.jpg');
   loveImage1 = loadImage("asset/familyPhotoOri.png");
   loveImage2 = loadImage("asset/familyPhotoChange.png");
   psyFather = loadSound("asset/psyFather.mp3");
@@ -1095,33 +1099,93 @@ function drawHome() {
   pop();
 
   //화살표 키
-  push();
-  translate(-width / 2 - 20, 600);
-  rectMode(CENTER);
-  stroke(255);
-  strokeWeight(3);
-  fill(50, 50, 150);
-  rect(1672, 143, 60, 45);
-  rect(1742, 143, 60, 45);
-  rect(1812, 143, 60, 45);
-  rect(1742, 88, 60, 45);
-  rectMode(CORNER);
-  noStroke();
-  textFont(customFont);
-  textSize(40);
-  textAlign(CENTER, CENTER);
-  fill(255);
-  text("<-", width - 250, 140);
-  text("->", width - 105, 140);
-  push();
-  translate(width / 2, height / 2);
-  rotate(radians(90));
-  text("<", -460, -785);
-  text("-", -445, -785);
-  text(">", -388, -785);
-  text("-", -402, -785);
-  pop();
-  pop();
+  if (homeCount == 1 || homeCount == 2) {
+    if (frameCount%60 > 30) {
+      push();
+      translate(-width / 2 - 20, 600);
+      rectMode(CENTER);
+      stroke(255);
+      strokeWeight(3);
+      fill(50, 50, 150);
+      rect(1672, 143, 60, 45);
+      rect(1742, 143, 60, 45);
+      rect(1812, 143, 60, 45);
+      rect(1742, 88, 60, 45);
+      rectMode(CORNER);
+      noStroke();
+      textFont(customFont);
+      textSize(40);
+      textAlign(CENTER, CENTER);
+      fill(255);
+      text("<-", width - 250, 140);
+      text("->", width - 105, 140);
+      push();
+      translate(width / 2, height / 2);
+      rotate(radians(90));
+      text("<", -460, -785);
+      text("-", -445, -785);
+      text(">", -388, -785);
+      text("-", -402, -785);
+      pop();
+      pop();
+    } else {
+      push();
+      translate(-width / 2 - 20, 600);
+      rectMode(CENTER);
+      stroke(255);
+      strokeWeight(3);
+      fill(50, 50, 150, 50);
+      rect(1672, 143, 60, 45);
+      rect(1742, 143, 60, 45);
+      rect(1812, 143, 60, 45);
+      rect(1742, 88, 60, 45);
+      rectMode(CORNER);
+      noStroke();
+      textFont(customFont);
+      textSize(40);
+      textAlign(CENTER, CENTER);
+      fill(255);
+      text("<-", width - 250, 140);
+      text("->", width - 105, 140);
+      push();
+      translate(width / 2, height / 2);
+      rotate(radians(90));
+      text("<", -460, -785);
+      text("-", -445, -785);
+      text(">", -388, -785);
+      text("-", -402, -785);
+      pop();
+      pop();
+    }
+  } else if (homeCount == 3 || homeCount == 4 && homeCount == 5) {
+    push();
+    translate(-width / 2 - 20, 600);
+    rectMode(CENTER);
+    stroke(255);
+    strokeWeight(3);
+    fill(50, 50, 150);
+    rect(1672, 143, 60, 45);
+    rect(1742, 143, 60, 45);
+    rect(1812, 143, 60, 45);
+    rect(1742, 88, 60, 45);
+    rectMode(CORNER);
+    noStroke();
+    textFont(customFont);
+    textSize(40);
+    textAlign(CENTER, CENTER);
+    fill(255);
+    text("<-", width - 250, 140);
+    text("->", width - 105, 140);
+    push();
+    translate(width / 2, height / 2);
+    rotate(radians(90));
+    text("<", -460, -785);
+    text("-", -445, -785);
+    text(">", -388, -785);
+    text("-", -402, -785);
+    pop();
+    pop();
+  }
 
   //안내창 멘트 0
   if (homeCount == 0) {
@@ -1267,14 +1331,27 @@ function appOpen() {
     1600,
     670
   );
-  stroke(0);
-  fill(242, 172, 186);
-  rectMode(CENTER);
-  rect(1600, 860, 200, 60, 10);
-  noStroke();
-  textSize(35);
-  fill(255);
-  text("spacebar", 1600, 855);
+  if (homeCount == 4) {
+    stroke(0);
+    fill(242, 172, 186);
+    rectMode(CENTER);
+    rect(1600, 860, 200, 60, 10);
+    noStroke();
+    textSize(35);
+    fill(255);
+    text("spacebar", 1600, 855);
+  } else if (homeCount == 5) {
+    if (frameCount % 60 > 30) {
+      stroke(0);
+      fill(242, 172, 186);
+      rectMode(CENTER);
+      rect(1600, 860, 200, 60, 10);
+      noStroke();
+      textSize(35);
+      fill(255);
+      text("spacebar", 1600, 855);
+    }
+  }
 }
 
 function setupMain1() {
@@ -1477,11 +1554,19 @@ function drawMini1() {
     } else if (gameState === "messageShown") {
       // 두 번째 마우스 클릭 시
       // 원하는 동작 수행
-      background(0);
+      image(mini1Ending,0,0,1920,1080);
       textSize(40);
       textAlign(CENTER, CENTER);
-      fill(255);
-      text('그래, 우리 이때 참 재미있었지! \n 생각해보면 지금도 변한 게 없는 친구들인데... \n 매일 보다가 점점 모이는 날이 적어지니까 괜히 서운한 마음이 들었나봐.', width / 2, height / 2);
+      fill(0);
+      text("그래, 우리 이때 참 재미있었지! \n 생각해보면 지금도 변한 게 없는 친구들인데... \n 매일 보다가 점점 모이는 날이 적어지니까 괜히 서운한 마음이 들었나봐.", width / 2, 150);
+      if (frameCount % 60 > 30) {
+        fill(50, 50, 150);
+        stroke(0);
+        rect(1760, 25, 120, 55);
+        fill(255);
+        noStroke();
+        text("ENTER", 1820, 50);
+      }
     }
   }
 }
@@ -1610,14 +1695,34 @@ function drawMini2() {
   // Display the message if creativity is gained
   if (gainedCreativity) {
     resetButton.hide();
-    background(0);
+    image(mini2Ending,0,0,1920,1080);
     textSize(40);
     textAlign(CENTER, CENTER);
+    fill(0);
+    text("그녀에게 내 마음을 전했다!", width / 2, 100);
+    
     fill(255);
-    text(
-      "그녀에게 내 마음을 전했다! \n\n 이 사람... 이런 타입이었구나?",
-      width / 2,
-      height / 2 - 100);
+    stroke(0);
+    strokeWeight(3);
+    ellipse(650,290,320,180);
+    ellipse(750,400,30,30);
+    ellipse(780,440,20,20);
+    fill(0);
+    noStroke();
+    textSize(30);
+    text("이 사람... \n 이런 타입이었구나?", 650, 280);
+    textSize(40);
+    fill(255);
+  
+    if (frameCount % 60 > 30) {
+      fill(50, 50, 150);
+      stroke(255);
+      rect(1760, 25, 120, 55);
+      fill(255);
+      noStroke();
+      textSize(40);
+      text("ENTER", 1820, 50);
+    }
   } else {
     textSize(40);
     textAlign(CENTER, CENTER);
@@ -1732,6 +1837,18 @@ function drawMini3() {
     fill(0)
     textSize(45)
     text("우리 가족 오래오래 건강하고 행복하자!", 800, 560);
+    if (frameCount % 60 > 30) {
+      fill(50, 50, 150);
+      stroke(255);
+      strokeWeight(1);
+      rect(1760, 25, 120, 55);
+      fill(255);
+      noStroke();
+      textSize(40);
+      textAlign(CENTER);
+      text("ENTER", 1820, 50);
+    }
+    textAlign(LEFT);
     !clickedInsideDifference
   }
 
@@ -1870,8 +1987,18 @@ function drawMini4() {
     textAlign(CENTER);
     text("다 지웠다!", width / 2, height / 2 - 105);
     textSize(40);
-    text("내가 이렇게나 부정적이었구나.. \n 긍정적으로 살자. \n 그게 나를 더 사랑해주는 길이니까.", width / 2, height / 2 + 10);
-
+    text("내가 이렇게나 부정적이었구나.. \n 긍정적으로 살아야겠다. \n 그게 나를 더 사랑해주는 길이니까.", width / 2, height / 2 + 10);
+    if (frameCount % 60 > 30) {
+      fill(50, 50, 150);
+      stroke(255);
+      strokeWeight(1);
+      rect(1760, 25, 120, 55);
+      fill(255);
+      noStroke();
+      textSize(40);
+      textAlign(CENTER,CENTER);
+      text("ENTER", 1820, 50);
+    }
   }
 
   // 벽 부수기 시도
@@ -1938,7 +2065,7 @@ function checkInteraction5() {
 }
 
 function setupMini5() {
-  catcher = new Catcher(100);
+  catcher = new Catcher(70);
   catcher.setLocation(width / 2, height - 70);
   noCursor();
   noStroke();
@@ -2011,6 +2138,20 @@ function drawMini5() {
       text("늘 내 편을 들어주는 네가 있어서", width / 2, height / 2 - 60);
       text("늘 고맙고 든든해.", width / 2, height / 2);
       text("앞으로도 우리 우정 영원하자", width / 2, height / 2 + 60);
+
+      if (frameCount % 60 > 30) {
+        rectMode(CORNER);
+        fill(50, 50, 150);
+        stroke(255);
+        strokeWeight(1);
+        rect(1760, 25, 120, 55);
+        fill(255);
+        noStroke();
+        textSize(40);
+        textAlign(CENTER);
+        text("ENTER", 1820, 50);
+        rectMode(CENTER);
+      }
     }
   } else {
     if (instruction) {
@@ -2120,6 +2261,14 @@ function setupMini6() {
 function drawMini6() {
   image(bg6, 0, 0);
   // 플레이어 그리기
+  rectMode(CENTER);
+  fill(50,50,150);
+  stroke(255);
+  strokeWeight(1);
+  rect(628,250,60,40);
+  rect(700,250,60,40);
+  rect(1008,250,140,40);
+  noStroke();
   textAlign(CENTER);
   fill(0);
   textSize(40);
@@ -2171,8 +2320,20 @@ function drawMini6() {
     textAlign(CENTER, CENTER);
     stroke(255);
     strokeWeight(10);
-    text('애인(이)가 삐짐 상태를 해지했습니다!\n(Enter를 누르세요!)', width / 2, height / 2);
+    text('애인(이)가 삐짐 상태를 해지했습니다!', width / 2, height / 2);
     noStroke();
+    if (frameCount % 60 > 30) {
+      rectMode(CORNER);
+      fill(50, 50, 150);
+      stroke(255);
+      strokeWeight(1);
+      rect(1760, 25, 120, 55);
+      fill(255);
+      noStroke();
+      textSize(40);
+      textAlign(CENTER);
+      text("ENTER", 1820, 50);
+    }
   }
 
   // 플레이어 양옆으로 이동
@@ -2333,6 +2494,18 @@ function drawMini7() {
     textSize(40);
     fill(255);
     text('가족들과 행복한 스위스여행을 마쳤습니다!', 110, 50);
+    if (frameCount % 60 > 30) {
+      rectMode(CORNER);
+      fill(50, 50, 150);
+      stroke(255);
+      strokeWeight(1);
+      rect(1760, 40, 120, 55);
+      fill(255);
+      noStroke();
+      textSize(40);
+      textAlign(CENTER);
+      text("ENTER", 1820, 50);
+    }
   }
 }
 
