@@ -1419,11 +1419,49 @@ function drawMini1() {
 
   // 클리어조건
   textFont(customFont)
+
+  rectMode(CENTER);
+  stroke(255);
+  strokeWeight(3);
+  fill(50, 50, 150);
+  rect(1672, 143, 60, 45);
+  rect(1742, 143, 60, 45);
+  rect(1812, 143, 60, 45);
+  rect(1742, 88, 60, 45);
+  rectMode(CORNER);
+  noStroke();
+  textFont(customFont);
+  textSize(40);
+  textAlign(CENTER, CENTER);
+  fill(255);
+  text("<-", width - 250, 140);
+  text("->", width - 105, 140);
+  push();
+  translate(width/2, height/2);
+  rotate(radians(90));
+  text("<",-460,-785);
+  text("-",-445,-785);
+  text(">",-388,-785);
+  text("-",-402,-785);
+  pop();
+
   if (getPC) {
-    textSize(30);
-    textAlign(CENTER, CENTER);
-    fill(255);
-    text('무사히 야자를 째고 PC방에 도착! \n 스페이스바를 눌러보자.', width / 2, 100);
+  fill(50,50,150);
+  stroke(255);
+  strokeWeight(1);
+  rectMode(CENTER);
+  rect(860,123,140,40);
+  rectMode(CORNER);
+  
+  noStroke();
+  textSize(30);
+  textAlign(CENTER, CENTER);
+  fill(255);
+  text(
+    "무사히 야자를 째고 PC방에 도착! \n spacebar  를 눌러보자.",
+    width / 2,
+    100
+  );
   } else if (rearDoor) {
     textSize(30);
     textAlign(CENTER, CENTER);
@@ -1443,7 +1481,7 @@ function drawMini1() {
     textSize(30);
     textAlign(CENTER, CENTER);
     fill(255);
-    text('선생님과 수위 아저씨를 피해\n친구와 야자를 째고 PC방에 가 봅시다! \n (하얀색 유저를 방향키로 조작합니다)', width / 2, 100);
+    text('선생님과 수위 아저씨를 피해\n친구와 야자를 째고 PC방에 가 봅시다!', width / 2, 100);
   }
 
   // 상황별 정의   
@@ -1526,9 +1564,9 @@ function drawMini1() {
   noStroke();
   fill(113, 199, 236)
   rect(100, 80, 200, 150);
-  textSize(100);
+  textSize(90);
   fill(255);
-  text("P C", 200, 150);
+  text("PC방", 200, 150);
 
   // 캐릭터들
   fill(255)
