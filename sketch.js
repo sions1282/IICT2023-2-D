@@ -1583,7 +1583,7 @@ function setupMini2() {
   resetButton.parent('p5-doms');
 
   resetButton.position(10, height - 150);
-  resetButton.mousePressed(resetGame);
+  resetButton.mousePressed(resetGame2);
   // 버튼의 크기 조정
   resetButton.style("font-size", "50px"); // 원하는 크기로 변경
   resetButton.style("font-family", "customFont"); // 원하는 크기로 변경
