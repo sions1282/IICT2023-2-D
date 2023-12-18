@@ -3,6 +3,12 @@ let customFont;
 let titleBG;
 let titlesnowflakes = [];
 
+//end 전역변수
+let fadeAmount = 0; // 페이드 효과의 초기 투명도 값
+let fading = false; // 페이드아웃 효과의 활성화 여부
+let fadeAmount1 = 255; // 페이드 효과의 초기 투명도 값을 최대로 설정
+let fadingIn = false; // 페이드인 효과의 활성화 여부
+
 //start 전역변수
 let snowflakes = [];
 let moonSize = 300; // 달의 크기
@@ -42,6 +48,7 @@ let gameState = "playing";
 let enemy = [];
 let securityImage;
 let teacherImage;
+let mini1Ending;
 
 //mini2 전역변수
 let flower0 = [];
@@ -54,6 +61,7 @@ let resetButton;
 let roseImage0;
 let roseImage1;
 let selectedFlower;
+let mini2Ending;
 
 //mini3 전역변수
 let playButton3;
@@ -185,10 +193,12 @@ function preload() {
   bg = loadImage('asset/classbg.png');
   securityImage = loadImage('asset/security.png');
   teacherImage = loadImage('asset/teacher.png');
+  mini1Ending = loadImage('asset/mini1Ending.jpg');
   bg2 = loadImage('asset/flowerbg.png');
   roseImage0 = loadImage('asset/rose0.png');
   roseImage1 = loadImage('asset/rose1.png');
   kiss = loadImage('asset/kiss.png');
+  mini2Ending = loadImage('asset/mini2Ending.jpg');
   loveImage1 = loadImage("asset/familyPhotoOri.png");
   loveImage2 = loadImage("asset/familyPhotoChange.png");
   psyFather = loadSound("asset/psyFather.mp3");
@@ -223,7 +233,6 @@ function setup() {
 }
 
 function draw() {
-  cursor();
   if (stateNow === "mini2") {
     resetButton.show();
   } else {
@@ -301,7 +310,7 @@ function draw() {
 }
 
 function keyPressed() {
-  if (keyCode === 13) { // 'enter' 키
+  if (keyCode === 80) { // 'p' 키 skip
     if (stateNow === "mini1") {
       stateNow = "main2";
     } else if (stateNow === "mini2") {
@@ -323,9 +332,6 @@ function keyPressed() {
     switch (stateNow) {
       case 'title':
         stateNow = "start";
-        break;
-      case 'start':
-        stateNow = "home";
         break;
       case 'mini6':
         if (!gameOver) {
@@ -735,6 +741,13 @@ function drawStart() {
 
   drawChristmasTree(1400, 730, 100);
   drawChristmasTree(1800, 790, 70);
+
+  //다음으로 넘어가기
+  if (keyIsPressed && keyCode === 32) {
+    if (startCharacter.x > 1050) {
+      stateNow = "home"
+    }
+  }
 }
 function messageNotice() {
   if (startCharacter.x > 100 && startCharacter.x < 400) {
@@ -1095,33 +1108,93 @@ function drawHome() {
   pop();
 
   //화살표 키
-  push();
-  translate(-width / 2 - 20, 600);
-  rectMode(CENTER);
-  stroke(255);
-  strokeWeight(3);
-  fill(50, 50, 150);
-  rect(1672, 143, 60, 45);
-  rect(1742, 143, 60, 45);
-  rect(1812, 143, 60, 45);
-  rect(1742, 88, 60, 45);
-  rectMode(CORNER);
-  noStroke();
-  textFont(customFont);
-  textSize(40);
-  textAlign(CENTER, CENTER);
-  fill(255);
-  text("<-", width - 250, 140);
-  text("->", width - 105, 140);
-  push();
-  translate(width / 2, height / 2);
-  rotate(radians(90));
-  text("<", -460, -785);
-  text("-", -445, -785);
-  text(">", -388, -785);
-  text("-", -402, -785);
-  pop();
-  pop();
+  if (homeCount == 1 || homeCount == 2) {
+    if (frameCount % 60 > 30) {
+      push();
+      translate(-width / 2 - 20, 600);
+      rectMode(CENTER);
+      stroke(255);
+      strokeWeight(3);
+      fill(50, 50, 150);
+      rect(1672, 143, 60, 45);
+      rect(1742, 143, 60, 45);
+      rect(1812, 143, 60, 45);
+      rect(1742, 88, 60, 45);
+      rectMode(CORNER);
+      noStroke();
+      textFont(customFont);
+      textSize(40);
+      textAlign(CENTER, CENTER);
+      fill(255);
+      text("<-", width - 250, 140);
+      text("->", width - 105, 140);
+      push();
+      translate(width / 2, height / 2);
+      rotate(radians(90));
+      text("<", -460, -785);
+      text("-", -445, -785);
+      text(">", -388, -785);
+      text("-", -402, -785);
+      pop();
+      pop();
+    } else {
+      push();
+      translate(-width / 2 - 20, 600);
+      rectMode(CENTER);
+      stroke(255);
+      strokeWeight(3);
+      fill(50, 50, 150, 50);
+      rect(1672, 143, 60, 45);
+      rect(1742, 143, 60, 45);
+      rect(1812, 143, 60, 45);
+      rect(1742, 88, 60, 45);
+      rectMode(CORNER);
+      noStroke();
+      textFont(customFont);
+      textSize(40);
+      textAlign(CENTER, CENTER);
+      fill(255);
+      text("<-", width - 250, 140);
+      text("->", width - 105, 140);
+      push();
+      translate(width / 2, height / 2);
+      rotate(radians(90));
+      text("<", -460, -785);
+      text("-", -445, -785);
+      text(">", -388, -785);
+      text("-", -402, -785);
+      pop();
+      pop();
+    }
+  } else if (homeCount == 3 || homeCount == 4 || homeCount == 5) {
+    push();
+    translate(-width / 2 - 20, 600);
+    rectMode(CENTER);
+    stroke(255);
+    strokeWeight(3);
+    fill(50, 50, 150);
+    rect(1672, 143, 60, 45);
+    rect(1742, 143, 60, 45);
+    rect(1812, 143, 60, 45);
+    rect(1742, 88, 60, 45);
+    rectMode(CORNER);
+    noStroke();
+    textFont(customFont);
+    textSize(40);
+    textAlign(CENTER, CENTER);
+    fill(255);
+    text("<-", width - 250, 140);
+    text("->", width - 105, 140);
+    push();
+    translate(width / 2, height / 2);
+    rotate(radians(90));
+    text("<", -460, -785);
+    text("-", -445, -785);
+    text(">", -388, -785);
+    text("-", -402, -785);
+    pop();
+    pop();
+  }
 
   //안내창 멘트 0
   if (homeCount == 0) {
@@ -1267,21 +1340,83 @@ function appOpen() {
     1600,
     670
   );
-  stroke(0);
-  fill(242, 172, 186);
-  rectMode(CENTER);
-  rect(1600, 860, 200, 60, 10);
-  noStroke();
-  textSize(35);
-  fill(255);
-  text("spacebar", 1600, 855);
+  if (homeCount == 4) {
+    stroke(0);
+    fill(242, 172, 186);
+    rectMode(CENTER);
+    rect(1600, 860, 200, 60, 10);
+    noStroke();
+    textSize(35);
+    fill(255);
+    text("spacebar", 1600, 855);
+  } else if (homeCount > 4) {
+    if (frameCount % 60 > 30) {
+      stroke(0);
+      fill(242, 172, 186);
+      rectMode(CENTER);
+      rect(1600, 860, 200, 60, 10);
+      noStroke();
+      textSize(35);
+      fill(255);
+      text("spacebar", 1600, 855);
+    }
+  }
 }
 
+function drawArrow() {
+  push();
+  translate(-1500, -30);
+  rectMode(CENTER);
+  stroke(255);
+  strokeWeight(3);
+  fill(50, 50, 150);
+  rect(1672, 143, 60, 45);
+  rect(1742, 143, 60, 45);
+  rect(1812, 143, 60, 45);
+  rect(1742, 88, 60, 45);
+  rectMode(CORNER);
+  noStroke();
+  textFont(customFont);
+  textSize(40);
+  textAlign(CENTER, CENTER);
+  fill(255);
+  text("<-", width - 250, 140);
+  text("->", width - 105, 140);
+  push();
+  translate(width / 2, height / 2);
+  rotate(radians(90));
+  text("<", -460, -785);
+  text("-", -445, -785);
+  text(">", -388, -785);
+  text("-", -402, -785);
+  pop();
+  pop();
+}
+function gift() {
+  fill(255);
+  textFont(customFont);
+  textSize(30);
+  textAlign(CORNER);
+  text('게임 전체 초기화 : F5 , 미니게임 SKIP : P', 1250, 1040);
+}
+function light(x, y, r, g, b) {
+  if (frameCount % 60 < 30) {
+    fill(r, g, b, 200);
+  } else {
+    noFill();
+  }
+  noStroke();
+  ellipse(x, y, 58, 35);
+}
 function setupMain1() {
   player = new Player(1020, 395, 5);
 }
 function drawMain1() {
   background(main1BG); // Display the background image
+  drawArrow();
+  gift();
+  light(431, 246, 255, 78, 78);
+  fill(255);
   player.update();
   player.display();
   checkInteraction1();
@@ -1289,14 +1424,15 @@ function drawMain1() {
 }
 function checkInteraction1() {
   // Check if player is within the ellipse
-  let ellipseX = 431, ellipseY = 246, ellipseW = 57, ellipseH = 35;
+  let ellipseX = 431, ellipseY = 246, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
     fill(255); // White color for the text
     noStroke();
     textFont(customFont);
+    textAlign(CENTER);
     textSize(30);
-    text('Press X', ellipseX, ellipseY - (ellipseH / 2) - 15); // Displaying below the ellipse
-    if (keyIsPressed && key === 'x') {
+    text('spacebar', ellipseX, ellipseY - 45); // Displaying below the ellipse
+    if (keyIsPressed && keyCode === 32) {
       stateNow = "mini1"; // Change the game state to the mini-game
     }
   }
@@ -1342,11 +1478,49 @@ function drawMini1() {
 
   // 클리어조건
   textFont(customFont)
+
+  rectMode(CENTER);
+  stroke(255);
+  strokeWeight(3);
+  fill(50, 50, 150);
+  rect(1672, 143, 60, 45);
+  rect(1742, 143, 60, 45);
+  rect(1812, 143, 60, 45);
+  rect(1742, 88, 60, 45);
+  rectMode(CORNER);
+  noStroke();
+  textFont(customFont);
+  textSize(40);
+  textAlign(CENTER, CENTER);
+  fill(255);
+  text("<-", width - 250, 140);
+  text("->", width - 105, 140);
+  push();
+  translate(width / 2, height / 2);
+  rotate(radians(90));
+  text("<", -460, -785);
+  text("-", -445, -785);
+  text(">", -388, -785);
+  text("-", -402, -785);
+  pop();
+
   if (getPC) {
+    fill(50, 50, 150);
+    stroke(255);
+    strokeWeight(1);
+    rectMode(CENTER);
+    rect(860, 123, 140, 40);
+    rectMode(CORNER);
+
+    noStroke();
     textSize(30);
     textAlign(CENTER, CENTER);
     fill(255);
-    text('무사히 야자를 째고 PC방에 도착! \n 스페이스바를 눌러보자.', width / 2, 100);
+    text(
+      "무사히 야자를 째고 PC방에 도착! \n spacebar  를 눌러보자.",
+      width / 2,
+      100
+    );
   } else if (rearDoor) {
     textSize(30);
     textAlign(CENTER, CENTER);
@@ -1366,7 +1540,7 @@ function drawMini1() {
     textSize(30);
     textAlign(CENTER, CENTER);
     fill(255);
-    text('선생님과 수위 아저씨를 피해\n친구와 야자를 째고 PC방에 가 봅시다! \n (하얀색 유저를 방향키로 조작합니다)', width / 2, 100);
+    text('선생님과 수위 아저씨를 피해\n친구와 야자를 째고 PC방에 가 봅시다!', width / 2, 100);
   }
 
   // 상황별 정의   
@@ -1449,9 +1623,9 @@ function drawMini1() {
   noStroke();
   fill(113, 199, 236)
   rect(100, 80, 200, 150);
-  textSize(100);
+  textSize(90);
   fill(255);
-  text("P C", 200, 150);
+  text("PC방", 200, 150);
 
   // 캐릭터들
   fill(255)
@@ -1477,11 +1651,22 @@ function drawMini1() {
     } else if (gameState === "messageShown") {
       // 두 번째 마우스 클릭 시
       // 원하는 동작 수행
-      background(0);
+      image(mini1Ending, 0, 0, 1920, 1080);
       textSize(40);
       textAlign(CENTER, CENTER);
-      fill(255);
-      text('그래, 우리 이때 참 재미있었지! \n 생각해보면 지금도 변한 게 없는 친구들인데... \n 매일 보다가 점점 모이는 날이 적어지니까 괜히 서운한 마음이 들었나봐.', width / 2, height / 2);
+      fill(0);
+      text("그래, 우리 이때 참 재미있었지! \n 생각해보면 지금도 변한 게 없는 친구들인데... \n 매일 보다가 점점 모이는 날이 적어지니까 괜히 서운한 마음이 들었나봐.", width / 2, 150);
+      if (frameCount % 60 > 30) {
+        fill(50, 50, 150);
+        stroke(0);
+        rect(1760, 25, 120, 55);
+        fill(255);
+        noStroke();
+        text("ENTER", 1820, 50);
+      }
+      if (keyIsPressed && keyCode === 13) {
+        stateNow = "main2"; // Change the game state to the mini-game
+      }
     }
   }
 }
@@ -1539,20 +1724,23 @@ function resetGame() {
 function drawMain2() {
   fill(255);
   background(main2BG); // Display the background image
+  drawArrow();
+  light(562, 499, 255, 142, 85);
+  fill(255);
   player.update();
   player.display();
   checkInteraction2();
 }
 function checkInteraction2() {
   // Check if player is within the ellipse
-  let ellipseX = 560, ellipseY = 498, ellipseW = 56, ellipseH = 33;
+  let ellipseX = 560, ellipseY = 498, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
     fill(255); // White color for the text
     noStroke();
     textFont(customFont);
     textSize(30);
-    text('Press X', ellipseX, ellipseY - (ellipseH / 2) - 15); // Displaying below the ellipse
-    if (keyIsPressed && key === 'x') {
+    text('spacebar', ellipseX, ellipseY - 45); // Displaying below the ellipse
+    if (keyIsPressed && keyCode === 32) {
       stateNow = "mini2"; // Change the game state to the mini-game
     }
   }
@@ -1583,7 +1771,7 @@ function setupMini2() {
   resetButton.parent('p5-doms');
 
   resetButton.position(10, height - 150);
-  resetButton.mousePressed(resetGame);
+  resetButton.mousePressed(resetGame2);
   // 버튼의 크기 조정
   resetButton.style("font-size", "50px"); // 원하는 크기로 변경
   resetButton.style("font-family", "customFont"); // 원하는 크기로 변경
@@ -1610,24 +1798,48 @@ function drawMini2() {
   // Display the message if creativity is gained
   if (gainedCreativity) {
     resetButton.hide();
-    background(0);
+    image(mini2Ending, 0, 0, 1920, 1080);
     textSize(40);
     textAlign(CENTER, CENTER);
+    fill(0);
+    text("그 사람에게 내 마음을 전했다!", width / 2, 100);
+
     fill(255);
-    text(
-      "그녀에게 내 마음을 전했다! \n\n 이 사람... 이런 타입이었구나?",
-      width / 2,
-      height / 2 - 100);
+    stroke(0);
+    strokeWeight(3);
+    ellipse(650, 290, 320, 180);
+    ellipse(750, 400, 30, 30);
+    ellipse(780, 440, 20, 20);
+    fill(0);
+    noStroke();
+    textSize(30);
+    text("이 사람... \n 이런 타입이었구나?", 650, 280);
+    textSize(40);
+    fill(255);
+
+    if (keyIsPressed && keyCode === 13) {
+      stateNow = "main3";
+    }
+
+    if (frameCount % 60 > 30) {
+      fill(50, 50, 150);
+      stroke(255);
+      rect(1760, 25, 120, 55);
+      fill(255);
+      noStroke();
+      textSize(40);
+      text("ENTER", 1820, 50);
+    }
   } else {
     textSize(40);
     textAlign(CENTER, CENTER);
     fill(0);
     let question =
-      "오늘은 그녀에게 고백하는 날! \n 긴장한 나머지 그녀가 반대편에 앉아있다는 사실을 생각 못했네. 이러면 LOVE가 거꾸로 보일텐데... \n 빠르게 두 송이만 움직이면 발칙한 고백으로 바꿀 수 있지 않을까?";
+      "오늘은 그 사람에게 고백하는 날! \n 긴장 탓인지 그 사람이 반대편에 앉아있다는 사실을 생각 못했네. 이러면 LOVE가 거꾸로 보일텐데... \n 빠르게 두 송이만 움직이면 발칙한 고백으로 바꿀 수 있지 않을까?";
     let hint =
-      "힌트: 1) 영어를 한글로 읽은 단어 2) 세 글자 3) 그녀의 시점을 기준으로 4)"
+      "힌트: 1) 영어를 한글로 읽은 결과 2) 세 글자 3) 그 사람의 시점을 기준으로 4)  "
     let condition =
-      "(줄기를 클릭하면 회전하고,드래그하면 이동한다. 꽃봉오리는 왼쪽 or 위쪽으로 와야 한다.)";
+      "<조작법> \n 장미 줄기의 중심을 클릭하면 회전하고, 드래그하면 이동한다. 꽃봉오리는 왼쪽 or 위쪽으로 와야 한다. \n (정답이라고 생각하는데 클리어되지 않을 시, 옮긴 꽃의 위치를 미세 조정해보자!)";
     text(question, width / 2, 110);
     textSize(35)
     text(hint, width / 2, 270)
@@ -1654,20 +1866,24 @@ function drawMain3() {
   textAlign(CORNER);
   fill(255);
   background(main3BG); // Display the background image
+  drawArrow();
+  light(538, 939, 255, 217, 75);
+  fill(255);
   player.update();
   player.display();
   checkInteraction3();
 }
 function checkInteraction3() {
   // Check if player is within the ellipse
-  let ellipseX = 538, ellipseY = 939, ellipseW = 55, ellipseH = 35;
+  let ellipseX = 538, ellipseY = 939, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
     fill(255); // White color for the text
     noStroke();
     textFont(customFont);
     textSize(30);
-    text('Press X', ellipseX, ellipseY - (ellipseH / 2) - 15); // Displaying below the ellipse
-    if (keyIsPressed && key === 'x') {
+    textAlign(CENTER);
+    text('spacebar', ellipseX, ellipseY - 45); // Displaying below the ellipse
+    if (keyIsPressed && keyCode === 32) {
       stateNow = "mini3"; // Change the game state to the mini-game
     }
   }
@@ -1686,6 +1902,7 @@ function setupMini3() {
   playButton3.hide();
 }
 function drawMini3() {
+  textAlign(CORNER);
   noStroke();
   background('#EDD5C7')
   fill('#964B00')
@@ -1732,6 +1949,23 @@ function drawMini3() {
     fill(0)
     textSize(45)
     text("우리 가족 오래오래 건강하고 행복하자!", 800, 560);
+
+    if (keyIsPressed && keyCode === 13) {
+      stateNow = "main4";
+    }
+
+    if (frameCount % 60 > 30) {
+      fill(50, 50, 150);
+      stroke(255);
+      strokeWeight(1);
+      rect(1760, 25, 120, 55);
+      fill(255);
+      noStroke();
+      textSize(40);
+      textAlign(CENTER);
+      text("ENTER", 1820, 50);
+    }
+    textAlign(LEFT);
     !clickedInsideDifference
   }
 
@@ -1768,21 +2002,24 @@ function drawMain4() {
   psyFather.stop();
   fill(255);
   background(main4BG); // Display the background image
+  drawArrow();
+  light(726, 335, 0, 150, 4);
+  fill(255);
   player.update();
   player.display();
   checkInteraction4();
 }
-
 function checkInteraction4() {
   // Check if player is within the ellipse
-  let ellipseX = 726, ellipseY = 335, ellipseW = 53, ellipseH = 34;
+  let ellipseX = 726, ellipseY = 335, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
     fill(255); // White color for the text
     noStroke();
     textFont(customFont);
     textSize(30);
-    text('Press X', ellipseX, ellipseY - (ellipseH / 2) - 15); // Displaying below the ellipse
-    if (keyIsPressed && key === 'x') {
+    textAlign(CENTER);
+    text('spacebar', ellipseX, ellipseY - 45); // Displaying below the ellipse
+    if (keyIsPressed && keyCode === 32) {
       stateNow = "mini4"; // Change the game state to the mini-game
     }
   }
@@ -1813,7 +2050,6 @@ function setupMini4() {
     goodzone.push(goodzones);
   }
 }
-
 function drawMini4() {
   noCursor();
   image(wall, 0, 0);
@@ -1824,7 +2060,7 @@ function drawMini4() {
   text("이건 내 다이어리...", width / 2, 50);
   text("이제 보니 참 부정적이네... 다 문질러버리자!", width / 2, height / 1.2 + 50);
   textSize(27);
-  text(">>부정적인 마음을 모두 *깔끔하게* 지우고 나를 사랑해보자<<", width / 2, height / 1.2 + 110);
+  text(">>마우스로 부정적인 마음을 모두 *깔끔하게* 지우고 나를 사랑해보자<<", width / 2, height / 1.2 + 110);
 
   // 벽이 부서지지 않았을 때, 크랙 그리기
   if (!broken) {
@@ -1870,8 +2106,23 @@ function drawMini4() {
     textAlign(CENTER);
     text("다 지웠다!", width / 2, height / 2 - 105);
     textSize(40);
-    text("내가 이렇게나 부정적이었구나.. \n 긍정적으로 살자. \n 그게 나를 더 사랑해주는 길이니까.", width / 2, height / 2 + 10);
+    text("내가 이렇게나 부정적이었구나.. \n 긍정적으로 살아야겠다. \n 그게 나를 더 사랑해주는 길이니까.", width / 2, height / 2 + 10);
 
+    if (keyIsPressed && keyCode === 13) {
+      stateNow = "main5";
+    }
+
+    if (frameCount % 60 > 30) {
+      fill(50, 50, 150);
+      stroke(255);
+      strokeWeight(1);
+      rect(1760, 25, 120, 55);
+      fill(255);
+      noStroke();
+      textSize(40);
+      textAlign(CENTER, CENTER);
+      text("ENTER", 1820, 50);
+    }
   }
 
   // 벽 부수기 시도
@@ -1917,34 +2168,36 @@ function drawMini4() {
 function drawMain5() {
   fill(255);
   background(main5BG); // Display the background image
+  drawArrow();
+  light(1175, 221, 82, 71, 255);
+  fill(255);
   player.update();
   player.display();
   checkInteraction5();
 }
-
 function checkInteraction5() {
   // Check if player is within the ellipse
-  let ellipseX = 1175, ellipseY = 221, ellipseW = 52, ellipseH = 34;
+  let ellipseX = 1175, ellipseY = 221, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
     fill(255); // White color for the text
     noStroke();
     textFont(customFont);
     textSize(30);
-    text('Press X', ellipseX, ellipseY - (ellipseH / 2) - 15); // Displaying below the ellipse
-    if (keyIsPressed && key === 'x') {
+    textAlign(CENTER);
+    text('spacebar', ellipseX, ellipseY - 45); // Displaying below the ellipse
+    if (keyIsPressed && keyCode === 32) {
       stateNow = "mini5"; // Change the game state to the mini-game
     }
   }
 }
 
 function setupMini5() {
-  catcher = new Catcher(100);
+  catcher = new Catcher(70);
   catcher.setLocation(width / 2, height - 70);
   noCursor();
   noStroke();
   hangeul = ["친", "구", "야", "고", "마", "워", "사", "랑", "해", "든", "오", "래", "보", "자",];
 }
-
 function drawMini5() {
   image(love, 0, 0);
   catcher.display();
@@ -2011,6 +2264,24 @@ function drawMini5() {
       text("늘 내 편을 들어주는 네가 있어서", width / 2, height / 2 - 60);
       text("늘 고맙고 든든해.", width / 2, height / 2);
       text("앞으로도 우리 우정 영원하자", width / 2, height / 2 + 60);
+
+      if (keyIsPressed && keyCode === 13) {
+        stateNow = "main6";
+      }
+
+      if (frameCount % 60 > 30) {
+        rectMode(CORNER);
+        fill(50, 50, 150);
+        stroke(255);
+        strokeWeight(1);
+        rect(1760, 25, 120, 55);
+        fill(255);
+        noStroke();
+        textSize(40);
+        textAlign(CENTER);
+        text("ENTER", 1820, 50);
+        rectMode(CENTER);
+      }
     }
   } else {
     if (instruction) {
@@ -2080,26 +2351,58 @@ function drawMini5() {
   text("ㅡ", width - 205, 140);
   text("ㅡ", width - 145, 140);
   text("ㅡ", width - 85, 140);
+  textSize(25);
+  text("(순서대로 쓰지 않아도 상관없어)", width - 250, 200);
+
+  push();
+  translate(-1500, 0);
+  rectMode(CENTER);
+  stroke(255);
+  strokeWeight(3);
+  fill(50, 50, 150);
+  rect(1672, 143, 60, 45);
+  rect(1742, 143, 60, 45);
+  rect(1812, 143, 60, 45);
+  rect(1742, 88, 60, 45);
+  rectMode(CORNER);
+  noStroke();
+  textFont(customFont);
+  textSize(40);
+  textAlign(CENTER, CENTER);
+  fill(255);
+  text("<-", width - 250, 140);
+  text("->", width - 105, 140);
+  push();
+  translate(width / 2, height / 2);
+  rotate(radians(90));
+  text("<", -460, -785);
+  text("-", -445, -785);
+  text(">", -388, -785);
+  text("-", -402, -785);
+  pop();
+  pop();
 }
 
 function drawMain6() {
   fill(255);
   background(main6BG); // Display the background image
+  drawArrow();
+  light(1052, 542, 60, 0, 179);
+  fill(255);
   player.update();
   player.display();
   checkInteraction6();
 }
-
 function checkInteraction6() {
   // Check if player is within the ellipse
-  let ellipseX = 1052, ellipseY = 542, ellipseW = 51, ellipseH = 35;
+  let ellipseX = 1052, ellipseY = 542, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
     fill(255); // White color for the text
     noStroke();
     textFont(customFont);
     textSize(30);
-    text('Press X', ellipseX, ellipseY - (ellipseH / 2) - 15); // Displaying below the ellipse
-    if (keyIsPressed && key === 'x') {
+    text('spacebar', ellipseX, ellipseY - 45); // Displaying below the ellipse
+    if (keyIsPressed && keyCode === 32) {
       stateNow = "mini6"; // Change the game state to the mini-game
     }
   }
@@ -2116,10 +2419,17 @@ function setupMini6() {
     targets.push(target);
   }
 }
-
 function drawMini6() {
   image(bg6, 0, 0);
   // 플레이어 그리기
+  rectMode(CENTER);
+  fill(50, 50, 150);
+  stroke(255);
+  strokeWeight(1);
+  rect(628, 250, 60, 40);
+  rect(700, 250, 60, 40);
+  rect(1008, 250, 140, 40);
+  noStroke();
   textAlign(CENTER);
   fill(0);
   textSize(40);
@@ -2152,7 +2462,7 @@ function drawMini6() {
     }
   }
 
-  if (score == 7) {
+  if (score == 10) {
     gameOver = true; // 스코어가 7이면 게임 종료
   }
 
@@ -2171,8 +2481,25 @@ function drawMini6() {
     textAlign(CENTER, CENTER);
     stroke(255);
     strokeWeight(10);
-    text('애인(이)가 삐짐 상태를 해지했습니다!\n(Enter를 누르세요!)', width / 2, height / 2);
+    text('애인(이)가 삐짐 상태를 해지했습니다!', width / 2, height / 2);
     noStroke();
+
+    if (keyIsPressed && keyCode === 13) {
+      stateNow = "main7";
+    }
+
+    if (frameCount % 60 > 30) {
+      rectMode(CORNER);
+      fill(50, 50, 150);
+      stroke(255);
+      strokeWeight(1);
+      rect(1760, 25, 120, 55);
+      fill(255);
+      noStroke();
+      textSize(40);
+      textAlign(CENTER);
+      text("ENTER", 1820, 50);
+    }
   }
 
   // 플레이어 양옆으로 이동
@@ -2192,21 +2519,24 @@ function drawMini6() {
 function drawMain7() {
   fill(255);
   background(main7BG); // Display the background image
+  drawArrow();
+  light(1392, 309, 166, 3, 255);
+  fill(255);
   player.update();
   player.display();
   checkInteraction7();
 }
-
 function checkInteraction7() {
   // Check if player is within the ellipse
-  let ellipseX = 1392, ellipseY = 309, ellipseW = 56, ellipseH = 33;
+  let ellipseX = 1392, ellipseY = 309, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
     fill(255); // White color for the text
     noStroke();
     textFont(customFont);
     textSize(30);
-    text('Press X', ellipseX, ellipseY - (ellipseH / 2) - 15); // Displaying below the ellipse
-    if (keyIsPressed && key === 'x') {
+    textAlign(CENTER);
+    text('spacebar', ellipseX, ellipseY - 45); // Displaying below the ellipse
+    if (keyIsPressed && keyCode === 32) {
       stateNow = "mini7"; // Change the game state to the mini-game
     }
   }
@@ -2252,14 +2582,12 @@ function setupMini7() {
   // Shuffle the board
   simpleShuffle(board);
 }
-
 // Swap two elements of an array
 function swap(i, j, arr) {
   let temp = arr[i];
   arr[i] = arr[j];
   arr[j] = temp;
 }
-
 // Pick a random spot to attempt a move
 // This should be improved to select from only valid moves
 function randomMove(arr) {
@@ -2267,14 +2595,12 @@ function randomMove(arr) {
   let r2 = floor(random(rows));
   move(r1, r2, arr);
 }
-
 // Shuffle the board
 function simpleShuffle(arr) {
   for (let i = 0; i < 100000; i++) {
     randomMove(arr);
   }
 }
-
 function drawMini7() {
   textAlign(CORNER);
   rectMode(CORNER);
@@ -2333,9 +2659,25 @@ function drawMini7() {
     textSize(40);
     fill(255);
     text('가족들과 행복한 스위스여행을 마쳤습니다!', 110, 50);
+
+    if (keyIsPressed && keyCode === 13) {
+      stateNow = "main8";
+    }
+
+    if (frameCount % 60 > 30) {
+      rectMode(CORNER);
+      fill(50, 50, 150);
+      stroke(255);
+      strokeWeight(1);
+      rect(1760, 40, 120, 55);
+      fill(255);
+      noStroke();
+      textSize(40);
+      textAlign(CENTER);
+      text("ENTER", 1820, 50);
+    }
   }
 }
-
 // Check if solved
 function isSolved() {
   for (let i = 0; i < board.length - 1; i++) {
@@ -2345,7 +2687,6 @@ function isSolved() {
   }
   return true;
 }
-
 // Swap two pieces
 function move(i, j, arr) {
   let blank = findBlank();
@@ -2357,7 +2698,6 @@ function move(i, j, arr) {
     swap(blank, i + j * cols, arr);
   }
 }
-
 // Check if neighbor
 function isNeighbor(i, j, x, y) {
   if (i !== x && j !== y) {
@@ -2369,14 +2709,12 @@ function isNeighbor(i, j, x, y) {
   }
   return false;
 }
-
 // to track blank spot
 function findBlank() {
   for (let i = 0; i < board.length; i++) {
     if (board[i] == -1) return i;
   }
 }
-
 function resetPuzzle() {
   // Set up the puzzle in the solved state
   for (let i = 0; i < tiles.length; i++) {
@@ -2387,7 +2725,6 @@ function resetPuzzle() {
   // Shuffle the puzzle
   simpleShuffle(board);
 }
-
 function solvePuzzle() {
   // Set up the puzzle in the original order
   for (let i = 0; i < originalOrder.length; i++) {
@@ -2396,7 +2733,6 @@ function solvePuzzle() {
   // The last tile is the empty spot
   board[board.length - 1] = -1;
 }
-
 function travelTalk() {
   noStroke();
   fill('#4B89DC')
@@ -2410,7 +2746,6 @@ function travelTalk() {
     "가족들과 여행하다보면\n종종 피곤하고 짜증나는 순간들이 있다.\n그럼에도 돌아보면 행복했던 기억들이 대부분인 것 같다!\n인내심을 갖고 갈등을 해결하며\n행복한 가족 여행을 완성해보자!\n(마우스로 퍼즐을 클릭해 사진을 완성해주세요!)", 1500, 185);
   pop();
 }
-
 function playMusic2() {
   if (swissSong.isPlaying()) {
     swissSong.stop(); // 현재 재생 중인 경우 멈춤
@@ -2418,11 +2753,9 @@ function playMusic2() {
     swissSong.play(); // 재생
   }
 }
-
 function showMessage() {
   displayText = true; // showMessage 함수가 호출되면 displayText를 true로 설정하여 텍스트를 표시
 }
-
 function displayMessage1(message) {
   fill(255);
   rect(1230, 480, 600, 70)
@@ -2434,7 +2767,6 @@ function displayMessage1(message) {
   fill(0)
   text(message, 1490, 515); // 메시지 위치 및 내용
 }
-
 function displayMessage2(message) {
   textAlign(RIGHT);
   textFont(customFont)
@@ -2445,7 +2777,6 @@ function displayMessage2(message) {
   fill(0);
   text(message, 750, 635, 1000, 210); // 메시지 위치 및 내용
 }
-
 function displayMessages() {
   if (clickCount >= 15 && clickCount % 15 === 0 && currentMessage < fightMessages.length) {
     displayMessage1(fightMessages[currentMessage]);
@@ -2458,17 +2789,42 @@ function displayMessages() {
   }
 }
 
-
 function drawMain8() {
   swissSong.stop();
   imageMode(CORNER);
   fill(255);
   background(main8BG); // Display the background image
+  drawArrow();
+  rainbow();
+  fill(255);
   player.update();
   player.display();
   checkInteraction8();
+  if (fading) {
+    fill(255, fadeAmount);
+    rect(0, 0, width, height);
+    fadeAmount += 5; // 투명도를 점차 증가시켜 페이드아웃 효과를 줌
+    if (fadeAmount > 255) { // 투명도가 최대값을 초과하면 다음 상태로 전환
+      fadeAmount = 0; // 투명도 초기화
+      fading = false; // 페이드아웃 효과 비활성화
+      stateNow = "main9";
+    }
+  }
 }
 
+function startFadeOut() {
+  fading = true; // 페이드아웃 효과를 시작하도록 설정
+}
+
+function rainbow() {
+  noStroke();
+  if (frameCount % 60 < 30) {
+    fill(255, 255, 255, 120);
+  } else {
+    noFill();
+  }
+  ellipse(1631, 319, 200, 245);
+}
 function checkInteraction8() {
   // Check if player is within the ellipse
   let ellipseX = 1631, ellipseY = 319, ellipseW = 201, ellipseH = 251;
@@ -2477,28 +2833,47 @@ function checkInteraction8() {
     noStroke();
     textFont(customFont);
     textSize(30);
-    text('Press X', ellipseX, ellipseY - (ellipseH / 2) - 15); // Displaying below the ellipse
-    if (keyIsPressed && key === 'x') {
-      stateNow = "main9"; // Change the game state to the mini-game
+    textAlign(CENTER)
+    text('spacebar', ellipseX, ellipseY - (ellipseH / 2) - 15); // Displaying below the ellipse
+    if (keyIsPressed && keyCode === 32) {
+      startFadeOut()
     }
   }
 }
 
 function drawMain9() {
+  startFadeIn();
   fill(255);
-  background(main9BG); // Display the background image
+  background(main9BG);
   rectMode(CENTER);
   fill(255, 150);
-  rect(959, 586, 1920, 400);
+  rect(959, 600, 1920, 400);
   fill(0);
   textFont(customFont);
   textSize(40);
   textAlign(CENTER, CENTER);
   text(
-    "\n \n \n 음... 이제 좀 알겠어..! 내가 잊고 있었네. \n 지금까지 걸어온 길을 돌아보니, 나는 충분히 사랑받고 사랑하며 살았구나! \n \n -The End-",
+    "\n \n \n 음... 이제 좀 알겠어..! 내가 잊고 있었네. \n 지금까지 걸어온 길을 돌아보니, 나는 충분히 사랑받고 사랑하며 살았구나! \n 물론 관계에 지칠 때가 다시금 찾아올 때도 있겠지만, \n 그래도 나의 삶은 사랑이라는 것을 잊지 말아야지..! \n \n -The End-",
     width / 2,
     height / 2
   );
+  fill(255);
   player.update();
   player.display();
+
+  if (fadingIn) {
+    fill(255, fadeAmount1);
+    rectMode(CORNER);
+    rect(0, 0, width, height);
+    fadeAmount1 -= 5; // 투명도를 점차 감소시켜 페이드인 효과를 줌
+    if (fadeAmount1 < 0) { // 투명도가 0 미만이면 페이드인 효과 완료
+      fadeAmount1 = 0; // 투명도를 정확히 0으로 설정
+      fadingIn = false; // 페이드인 효과 비활성화
+      // 페이드인 완료 후 필요한 추가 동작 (예: 게임 상태 변경 등)
+    }
+  }
+}
+
+function startFadeIn() {
+  fadingIn = true; // 페이드인 효과를 시작하도록 설정
 }
