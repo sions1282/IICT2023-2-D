@@ -1157,7 +1157,7 @@ function drawHome() {
       pop();
       pop();
     }
-  } else if (homeCount == 3 || homeCount == 4 && homeCount == 5) {
+  } else if (homeCount == 3 || homeCount == 4 || homeCount == 5) {
     push();
     translate(-width / 2 - 20, 600);
     rectMode(CENTER);
@@ -1340,7 +1340,7 @@ function appOpen() {
     textSize(35);
     fill(255);
     text("spacebar", 1600, 855);
-  } else if (homeCount == 5) {
+  } else if (homeCount > 4) {
     if (frameCount % 60 > 30) {
       stroke(0);
       fill(242, 172, 186);
