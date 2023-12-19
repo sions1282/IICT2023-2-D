@@ -141,6 +141,7 @@ let bang;
 let apologize = ['미안해', '화해하자', '사랑해'];
 let bad = ['너무해', '나빠', '질투나'];
 let end;
+let endtran = 255;
 
 //mini7 전역변수
 let playButton7;
@@ -2518,6 +2519,7 @@ function drawMini6() {
     strokeWeight(10);
     text('애인(이)가 삐짐 상태를 해지했습니다!', width / 2, height / 2);
     noStroke();
+    endtran = 0;
 
     if (keyIsPressed && keyCode === 13) {
       stateNow = "main7";
@@ -2546,7 +2548,7 @@ function drawMini6() {
 
   // 점수 표시
   textSize(30);
-  fill(0);
+  fill(0, endtran);
   textAlign(LEFT, TOP);
   text('Score: ' + score, 10, 10);
 }
