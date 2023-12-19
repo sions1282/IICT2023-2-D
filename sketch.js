@@ -1730,6 +1730,7 @@ function drawMain2() {
   fill(255);
   background(main2BG); // Display the background image
   drawArrow();
+  gift();
   light(562, 499, 255, 142, 85);
   fill(255);
   player.update();
@@ -1877,6 +1878,7 @@ function drawMain3() {
   fill(255);
   background(main3BG); // Display the background image
   drawArrow();
+  gift();
   light(538, 939, 255, 217, 75);
   fill(255);
   player.update();
@@ -2018,6 +2020,7 @@ function drawMain4() {
   fill(255);
   background(main4BG); // Display the background image
   drawArrow();
+  gift();
   light(726, 335, 0, 150, 4);
   fill(255);
   player.update();
@@ -2189,6 +2192,7 @@ function drawMain5() {
   fill(255);
   background(main5BG); // Display the background image
   drawArrow();
+  gift();
   light(1175, 221, 82, 71, 255);
   fill(255);
   player.update();
@@ -2412,6 +2416,7 @@ function drawMain6() {
   fill(255);
   background(main6BG); // Display the background image
   drawArrow();
+  gift();
   light(1052, 542, 60, 0, 179);
   fill(255);
   player.update();
@@ -2550,6 +2555,7 @@ function drawMain7() {
   fill(255);
   background(main7BG); // Display the background image
   drawArrow();
+  gift();
   light(1392, 309, 166, 3, 255);
   fill(255);
   player.update();
@@ -2830,6 +2836,7 @@ function drawMain8() {
   fill(255);
   background(main8BG); // Display the background image
   drawArrow();
+  gift();
   rainbow();
   fill(255);
   player.update();
