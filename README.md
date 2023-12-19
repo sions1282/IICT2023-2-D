@@ -1,4 +1,4 @@
-Walking to Love
+Walking to LOVE
 =============
 2023학년도 2학기 정보문화기술입문 D조 
 
