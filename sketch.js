@@ -1167,7 +1167,7 @@ function drawHome() {
       pop();
       pop();
     }
-  } else if (homeCount == 3 || homeCount == 4 || homeCount == 5) {
+  } else if (homeCount > 2) {
     push();
     translate(-width / 2 - 20, 600);
     rectMode(CENTER);
@@ -1745,7 +1745,7 @@ function checkInteraction2() {
     fill(50,50,150); //네모
     stroke(255);
     rectMode(CENTER);
-    rect(560,458,140,40);
+    rect(620,458,140,40);
     rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
@@ -2207,7 +2207,7 @@ function checkInteraction5() {
     fill(50,50,150); //네모
     stroke(255);
     rectMode(CENTER);
-    rect(1175,190,140,40);
+    rect(1175,192,140,40);
     rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
@@ -2431,7 +2431,7 @@ function checkInteraction6() {
     fill(50,50,150); //네모
     stroke(255);
     rectMode(CENTER);
-    rect(1052,502,140,40);
+    rect(1112,502,140,40);
     rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
@@ -2570,6 +2570,7 @@ function checkInteraction7() {
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
     fill(50,50,150); //네모
     stroke(255);
+    strokeWeight(2);
     rectMode(CENTER);
     rect(1392,279,140,40);
     rectMode(CORNER);
@@ -2876,7 +2877,7 @@ function checkInteraction8() {
     fill(50,50,150); //네모
     stroke(255);
     rectMode(CENTER);
-    rect(1631,190,140,40);
+    rect(1631,193,140,40);
     rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
