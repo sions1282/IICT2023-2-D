@@ -141,6 +141,7 @@ let bang;
 let apologize = ['미안해', '화해하자', '사랑해'];
 let bad = ['너무해', '나빠', '질투나'];
 let end;
+let endtran = 255;
 
 //mini7 전역변수
 let playButton7;
@@ -1166,7 +1167,7 @@ function drawHome() {
       pop();
       pop();
     }
-  } else if (homeCount == 3 || homeCount == 4 || homeCount == 5) {
+  } else if (homeCount > 2) {
     push();
     translate(-width / 2 - 20, 600);
     rectMode(CENTER);
@@ -1368,7 +1369,7 @@ function drawArrow() {
   translate(-1500, -30);
   rectMode(CENTER);
   stroke(255);
-  strokeWeight(3);
+  strokeWeight(1);
   fill(50, 50, 150);
   rect(1672, 143, 60, 45);
   rect(1742, 143, 60, 45);
@@ -1396,8 +1397,8 @@ function gift() {
   fill(255);
   textFont(customFont);
   textSize(30);
-  textAlign(CORNER);
-  text('게임 전체 초기화 : F5 , 미니게임 SKIP : P', 1250, 1040);
+  textAlign(RIGHT);
+  text('미니게임 하다가 힘들면 SKIP 할래 : P, 게임을 처음부터 다시 할래 : F5', 1890, 1035);
 }
 function light(x, y, r, g, b) {
   if (frameCount % 60 < 30) {
@@ -1426,6 +1427,11 @@ function checkInteraction1() {
   // Check if player is within the ellipse
   let ellipseX = 431, ellipseY = 246, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
+    fill(50,50,150); // 네모
+    stroke(255);
+    rectMode(CENTER);
+    rect(431,206,140,40);
+    rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
     textFont(customFont);
@@ -1481,7 +1487,7 @@ function drawMini1() {
 
   rectMode(CENTER);
   stroke(255);
-  strokeWeight(3);
+  strokeWeight(1);
   fill(50, 50, 150);
   rect(1672, 143, 60, 45);
   rect(1742, 143, 60, 45);
@@ -1725,6 +1731,7 @@ function drawMain2() {
   fill(255);
   background(main2BG); // Display the background image
   drawArrow();
+  gift();
   light(562, 499, 255, 142, 85);
   fill(255);
   player.update();
@@ -1735,10 +1742,16 @@ function checkInteraction2() {
   // Check if player is within the ellipse
   let ellipseX = 560, ellipseY = 498, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
+    fill(50,50,150); //네모
+    stroke(255);
+    rectMode(CENTER);
+    rect(560,458,140,40);
+    rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
     textFont(customFont);
     textSize(30);
+    textAlign(CENTER);
     text('spacebar', ellipseX, ellipseY - 45); // Displaying below the ellipse
     if (keyIsPressed && keyCode === 32) {
       stateNow = "mini2"; // Change the game state to the mini-game
@@ -1867,6 +1880,7 @@ function drawMain3() {
   fill(255);
   background(main3BG); // Display the background image
   drawArrow();
+  gift();
   light(538, 939, 255, 217, 75);
   fill(255);
   player.update();
@@ -1877,6 +1891,11 @@ function checkInteraction3() {
   // Check if player is within the ellipse
   let ellipseX = 538, ellipseY = 939, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
+    fill(50,50,150); //네모
+    stroke(255);
+    rectMode(CENTER);
+    rect(538,899,140,40);
+    rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
     textFont(customFont);
@@ -2003,6 +2022,7 @@ function drawMain4() {
   fill(255);
   background(main4BG); // Display the background image
   drawArrow();
+  gift();
   light(726, 335, 0, 150, 4);
   fill(255);
   player.update();
@@ -2013,6 +2033,11 @@ function checkInteraction4() {
   // Check if player is within the ellipse
   let ellipseX = 726, ellipseY = 335, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
+    fill(50,50,150); //네모
+    stroke(255);
+    rectMode(CENTER);
+    rect(726,295,140,40);
+    rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
     textFont(customFont);
@@ -2169,6 +2194,7 @@ function drawMain5() {
   fill(255);
   background(main5BG); // Display the background image
   drawArrow();
+  gift();
   light(1175, 221, 82, 71, 255);
   fill(255);
   player.update();
@@ -2179,6 +2205,11 @@ function checkInteraction5() {
   // Check if player is within the ellipse
   let ellipseX = 1175, ellipseY = 221, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
+    fill(50,50,150); //네모
+    stroke(255);
+    rectMode(CENTER);
+    rect(1175,181,140,40);
+    rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
     textFont(customFont);
@@ -2387,6 +2418,7 @@ function drawMain6() {
   fill(255);
   background(main6BG); // Display the background image
   drawArrow();
+  gift();
   light(1052, 542, 60, 0, 179);
   fill(255);
   player.update();
@@ -2397,9 +2429,15 @@ function checkInteraction6() {
   // Check if player is within the ellipse
   let ellipseX = 1052, ellipseY = 542, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
+    fill(50,50,150); //네모
+    stroke(255);
+    rectMode(CENTER);
+    rect(1052,502,140,40);
+    rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
     textFont(customFont);
+    textAlign(CENTER);
     textSize(30);
     text('spacebar', ellipseX, ellipseY - 45); // Displaying below the ellipse
     if (keyIsPressed && keyCode === 32) {
@@ -2414,7 +2452,7 @@ function setupMini6() {
   textFont(customFont);
 
   // 처음에 목표물을 생성합니다.
-  for (let i = 0; i < 13; i++) {
+  for (let i = 0; i < 10; i++) {
     let target = new Target(random(width), random(0, 20), bad[int(random(3))]);
     targets.push(target);
   }
@@ -2463,7 +2501,7 @@ function drawMini6() {
   }
 
   if (score == 10) {
-    gameOver = true; // 스코어가 7이면 게임 종료
+    gameOver = true; // 스코어가 10이면 게임 종료
   }
 
   // 목표물 이동 및 그리기
@@ -2483,6 +2521,7 @@ function drawMini6() {
     strokeWeight(10);
     text('애인(이)가 삐짐 상태를 해지했습니다!', width / 2, height / 2);
     noStroke();
+    endtran = 0;
 
     if (keyIsPressed && keyCode === 13) {
       stateNow = "main7";
@@ -2511,7 +2550,7 @@ function drawMini6() {
 
   // 점수 표시
   textSize(30);
-  fill(0);
+  fill(0, endtran);
   textAlign(LEFT, TOP);
   text('Score: ' + score, 10, 10);
 }
@@ -2520,6 +2559,7 @@ function drawMain7() {
   fill(255);
   background(main7BG); // Display the background image
   drawArrow();
+  gift();
   light(1392, 309, 166, 3, 255);
   fill(255);
   player.update();
@@ -2530,6 +2570,12 @@ function checkInteraction7() {
   // Check if player is within the ellipse
   let ellipseX = 1392, ellipseY = 309, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
+    fill(50,50,150); //네모
+    stroke(255);
+    strokeWeight(2);
+    rectMode(CENTER);
+    rect(1392,279,140,40);
+    rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
     textFont(customFont);
@@ -2795,6 +2841,7 @@ function drawMain8() {
   fill(255);
   background(main8BG); // Display the background image
   drawArrow();
+  gift();
   rainbow();
   fill(255);
   player.update();
@@ -2829,6 +2876,11 @@ function checkInteraction8() {
   // Check if player is within the ellipse
   let ellipseX = 1631, ellipseY = 319, ellipseW = 201, ellipseH = 251;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
+    fill(50,50,150); //네모
+    stroke(255);
+    rectMode(CENTER);
+    rect(1631,193,140,40);
+    rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
     textFont(customFont);
@@ -2857,6 +2909,13 @@ function drawMain9() {
     width / 2,
     height / 2
   );
+
+  fill(255);
+  textFont(customFont);
+  textSize(30);
+  textAlign(RIGHT);
+  text('게임을 처음부터 다시 할래 : F5', 1890, 1035);
+
   fill(255);
   player.update();
   player.display();
