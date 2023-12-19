@@ -1427,10 +1427,10 @@ function checkInteraction1() {
   // Check if player is within the ellipse
   let ellipseX = 431, ellipseY = 246, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
-    fill(50,50,150); // 네모
+    fill(50, 50, 150); // 네모
     stroke(255);
     rectMode(CENTER);
-    rect(431,206,140,40);
+    rect(431, 206, 140, 40);
     rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
@@ -1742,10 +1742,10 @@ function checkInteraction2() {
   // Check if player is within the ellipse
   let ellipseX = 560, ellipseY = 498, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
-    fill(50,50,150); //네모
+    fill(50, 50, 150); //네모
     stroke(255);
     rectMode(CENTER);
-    rect(560,458,140,40);
+    rect(560, 458, 140, 40);
     rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
@@ -1891,10 +1891,10 @@ function checkInteraction3() {
   // Check if player is within the ellipse
   let ellipseX = 538, ellipseY = 939, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
-    fill(50,50,150); //네모
+    fill(50, 50, 150); //네모
     stroke(255);
     rectMode(CENTER);
-    rect(538,899,140,40);
+    rect(538, 899, 140, 40);
     rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
@@ -2033,10 +2033,10 @@ function checkInteraction4() {
   // Check if player is within the ellipse
   let ellipseX = 726, ellipseY = 335, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
-    fill(50,50,150); //네모
+    fill(50, 50, 150); //네모
     stroke(255);
     rectMode(CENTER);
-    rect(726,295,140,40);
+    rect(726, 295, 140, 40);
     rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
@@ -2205,10 +2205,10 @@ function checkInteraction5() {
   // Check if player is within the ellipse
   let ellipseX = 1175, ellipseY = 221, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
-    fill(50,50,150); //네모
+    fill(50, 50, 150); //네모
     stroke(255);
     rectMode(CENTER);
-    rect(1175,181,140,40);
+    rect(1175, 181, 140, 40);
     rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
@@ -2429,10 +2429,10 @@ function checkInteraction6() {
   // Check if player is within the ellipse
   let ellipseX = 1052, ellipseY = 542, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
-    fill(50,50,150); //네모
+    fill(50, 50, 150); //네모
     stroke(255);
     rectMode(CENTER);
-    rect(1052,502,140,40);
+    rect(1052, 502, 140, 40);
     rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
@@ -2570,11 +2570,11 @@ function checkInteraction7() {
   // Check if player is within the ellipse
   let ellipseX = 1392, ellipseY = 309, ellipseW = 100, ellipseH = 100;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
-    fill(50,50,150); //네모
+    fill(50, 50, 150); //네모
     stroke(255);
     strokeWeight(2);
     rectMode(CENTER);
-    rect(1392,279,140,40);
+    rect(1392, 279, 140, 40);
     rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
@@ -2876,10 +2876,10 @@ function checkInteraction8() {
   // Check if player is within the ellipse
   let ellipseX = 1631, ellipseY = 319, ellipseW = 201, ellipseH = 251;
   if (abs(player.x - ellipseX) < ellipseW / 2 && abs(player.y - ellipseY) < ellipseH / 2) {
-    fill(50,50,150); //네모
+    fill(50, 50, 150); //네모
     stroke(255);
     rectMode(CENTER);
-    rect(1631,193,140,40);
+    rect(1631, 193, 140, 40);
     rectMode(CORNER);
     fill(255); // White color for the text
     noStroke();
