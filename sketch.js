@@ -2450,7 +2450,7 @@ function setupMini6() {
   textFont(customFont);
 
   // 처음에 목표물을 생성합니다.
-  for (let i = 0; i < 13; i++) {
+  for (let i = 0; i < 10; i++) {
     let target = new Target(random(width), random(0, 20), bad[int(random(3))]);
     targets.push(target);
   }
@@ -2499,7 +2499,7 @@ function drawMini6() {
   }
 
   if (score == 10) {
-    gameOver = true; // 스코어가 7이면 게임 종료
+    gameOver = true; // 스코어가 10이면 게임 종료
   }
 
   // 목표물 이동 및 그리기
